@@ -1242,8 +1242,7 @@ function renderTT(){
     const h0 = Math.floor(start / TT_COLS), col0 = start % TT_COLS;
     const top = h0 * ROW_H;
     const indent = (col0 / TT_COLS * 100);
-    labels += `<div class="tt-memo-label" style="top:${top}px;text-indent:${indent}%;">${escapeHtml(gg.memo)}</div>`;
-  }
+    labels += `<div class="tt-memo-label" style="top:${top}px;text-indent:calc(${indent}% + 12px);">${escapeHtml(gg.memo)}</div>`;
   html += `<div class="tt-labels">${labels}</div>`;
   grid.innerHTML = html;
   renderTTPanel();
