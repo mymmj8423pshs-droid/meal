@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>급식 알리미 (전국판)</title>
+
+<!-- PWA -->
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#f8c0d8">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="급식 알리미">
+<link rel="icon" type="image/png" href="./icon-192.png">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+@font-face{font-family:'Hanam Daum';src:url('fonts/hanam-daum.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'HS Santokki';src:url('fonts/hs-santokki.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Mapo Backpacking';src:url('fonts/mapo-backpacking.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Pretendard EL';src:url('fonts/pretendard-el.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Goyang Ilsan';src:url('fonts/goyang-ilsan.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Gwangyang Haetsal';src:url('fonts/gwangyang-haetsal.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Donggrami';src:url('fonts/donggrami.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Midyakda';src:url('fonts/midyakda.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Jeonnam Yuna';src:url('fonts/jeonnam-yuna.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Chungbuk 70';src:url('fonts/chungbuk70.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'Taebaek Eunhasu';src:url('fonts/taebaek-eunhasu.woff2') format('woff2');font-display:swap;}
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css');
+
+  :root {
+    --c-primary: #c01858;
+    --c-accent:  #f060a0;
+    --c-light:   #f8c0d8;
+    --c-bg:      #f9e0ec;
+    --c-card:    #fff8fb;
+    --c-text:    #3a1a28;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--app-font, 'Dongle', sans-serif);
+    font-size: calc(17px * var(--fs, 1));
+    letter-spacing: var(--app-gap, 0);
+    min-height: 100vh;
+    color: #3a1a28;
+    background-color: var(--c-bg);
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 18px, color-mix(in srgb, var(--c-primary) 13%, transparent) 18px, color-mix(in srgb, var(--c-primary) 13%, transparent) 20px),
+      repeating-linear-gradient(-45deg, transparent, transparent 18px, color-mix(in srgb, var(--c-primary) 13%, transparent) 18px, color-mix(in srgb, var(--c-primary) 13%, transparent) 20px),
+      repeating-linear-gradient(45deg, transparent, transparent 38px, color-mix(in srgb, var(--c-primary) 8%, transparent) 38px, color-mix(in srgb, var(--c-primary) 8%, transparent) 42px),
+      repeating-linear-gradient(-45deg, transparent, transparent 38px, color-mix(in srgb, var(--c-primary) 8%, transparent) 38px, color-mix(in srgb, var(--c-primary) 8%, transparent) 42px);
+  }
+  input, textarea, button, select { font-family: inherit; }
+
+
+  body::before {
+    content: ''; display: block; height: 26px; background-color: var(--c-accent);
+    background-image: radial-gradient(circle 2px at 12px 7px, color-mix(in srgb, var(--c-card) 75%, transparent) 2px, transparent 2.5px);
+    background-size: 24px 26px; background-repeat: repeat-x;
+    -webkit-mask:
+      radial-gradient(circle 11px at 12px 15px, #000 11px, transparent 11.5px) 0 0/24px 26px repeat-x,
+      linear-gradient(#000, #000) 0 0/100% 15px no-repeat;
+    mask:
+      radial-gradient(circle 11px at 12px 15px, #000 11px, transparent 11.5px) 0 0/24px 26px repeat-x,
+      linear-gradient(#000, #000) 0 0/100% 15px no-repeat;
+  }
+  body::after {
+    content: ''; display: block; height: 26px; background-color: var(--c-accent);
+    background-image: radial-gradient(circle 2px at 12px 19px, color-mix(in srgb, var(--c-card) 75%, transparent) 2px, transparent 2.5px);
+    background-size: 24px 26px; background-repeat: repeat-x;
+    -webkit-mask:
+      radial-gradient(circle 11px at 12px 11px, #000 11px, transparent 11.5px) 0 0/24px 26px repeat-x,
+      linear-gradient(#000, #000) 0 100%/100% 15px no-repeat;
+    mask:
+      radial-gradient(circle 11px at 12px 11px, #000 11px, transparent 11.5px) 0 0/24px 26px repeat-x,
+      linear-gradient(#000, #000) 0 100%/100% 15px no-repeat;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+  }
+
+  @keyframes shimmer { 0% { background-position: -600px 0; } 100% { background-position: 600px 0; } }
+  @keyframes floatY { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+
+  .app { max-width: 900px; margin: 0 auto; padding: 18px 16px 60px; }
+
+  /* 헤더 */
+  header { margin-bottom: 14px; text-align: center; position: relative; padding: 0 50px; }
+  header::before, header::after { content: '🪽'; font-size: calc(28px * var(--fs, 1)); position: absolute; top: 8px; animation: floatY 2.5s ease-in-out infinite; }
+  header::before { left: 0; animation-delay: 0s; }
+  header::after  { right: 0; animation-delay: 0.6s; }
+  header h1 {
+    font-size: calc(52px * var(--fs, 1)); font-weight: 700; letter-spacing: 0.06em; display: inline-block;
+    background: linear-gradient(90deg, var(--c-primary) 0%, var(--c-accent) 35%, var(--c-light) 50%, var(--c-accent) 65%, var(--c-primary) 100%);
+    background-size: 600px 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: shimmer 2.5s linear infinite, floatY 3s ease-in-out infinite;
+    filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(4px 4px 0 var(--c-light));
+  }
+  header p { font-size: calc(18px * var(--fs, 1)); color: var(--c-primary); margin-top: 8px; letter-spacing: 0.03em; }
+  .title-edit { -webkit-text-fill-color: initial; background: none; border: none; cursor: pointer; font-size: calc(15px * var(--fs, 1)); margin-left: 7px; opacity: 0.65; vertical-align: middle; filter: none; animation: none; padding: 2px; }
+  .title-edit:hover { opacity: 1; }
+
+  /* ============ 쿨 스킨 ============ */
+  body.skin-cool { background-image: none; letter-spacing: -0.01em; }
+  body.skin-cool::before, body.skin-cool::after { display: none; }
+  body.skin-cool header::before, body.skin-cool header::after { display: none; }
+  body.skin-cool header h1 {
+    font-size: calc(29px * var(--fs, 1)); font-weight: 800; letter-spacing: -0.03em; display: inline-block;
+    background: none; -webkit-text-fill-color: var(--c-primary); color: var(--c-primary);
+    filter: none; animation: none;
+  }
+  body.skin-cool header p { font-size: calc(11px * var(--fs, 1)); font-weight: 500; letter-spacing: 0; opacity: 0.72; }
+  body.skin-cool .cute-only { display: none; }
+  body.skin-cool .detail::before, body.skin-cool .comments-box::before { display: none; }
+  body.skin-cool .school-pill, body.skin-cool .detail, body.skin-cool .comments-box,
+  body.skin-cool .timer-box, body.skin-cool .day, body.skin-cool .icon-btn,
+  body.skin-cool .modal, body.skin-cool .setup-card { box-shadow: none; }
+  body.skin-cool .day { border-radius: 8px; }
+  body.skin-cool .day::after { display: none; }
+  body.skin-cool .modal { border-width: 1.5px; }
+  /* 쿨에서 글씨 크기 살짝 정돈 (Dongle 대비 산세리프가 커 보여서) */
+  body.skin-cool header h1 { letter-spacing: -0.03em; }
+  body.skin-cool .menu-name, body.skin-cool .detail-date, body.skin-cool .comments-title,
+  body.skin-cool .month-label, body.skin-cool .tab, body.skin-cool .day-num { font-weight: 600; }
+  body.skin-cool header h1 { font-weight: 700; }
+  /* 쿨: 나머지 텍스트도 1pt 작게 */
+  /* 쿨: 메모 모달 + 모달 공통 텍스트 축소 */
+
+  /* 쿨 물결 링클 */
+  .cool-ripple { position: fixed; border-radius: 50%; pointer-events: none; z-index: 99998;
+    border: 2px solid var(--c-accent); background: radial-gradient(circle, color-mix(in srgb, var(--c-accent) 18%, transparent) 0%, transparent 60%);
+    transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+  @keyframes coolRippleAnim { to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+
+  /* 상단 바: 학교 선택 + 설정 */
+  .topbar { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 14px; }
+  .school-pill {
+    background: #fff8fb; border: 2px solid var(--c-accent); border-radius: 22px; padding: 6px 16px;
+    font-size: calc(21px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); cursor: pointer; box-shadow: 2px 2px 0 var(--c-light);
+    display: flex; align-items: center; gap: 6px; transition: transform 0.12s;
+  }
+  .school-pill:hover { transform: scale(1.03); }
+  .icon-btn {
+    background: #fff8fb; border: 2px solid var(--c-light); border-radius: 50%; width: 38px; height: 38px;
+    font-size: calc(18px * var(--fs, 1)); cursor: pointer; color: var(--c-primary); box-shadow: 2px 2px 0 var(--c-light); transition: transform 0.12s;
+  }
+  .icon-btn:hover { transform: scale(1.08); border-color: var(--c-accent); }
+  .fortune-btn { background: none; border: none; box-shadow: none; width: auto; height: auto; font-size: calc(24px * var(--fs, 1)); padding: 0 2px; }
+  .fortune-btn:hover { transform: scale(1.15) rotate(-6deg); border: none; }
+
+  /* 월 이동 */
+  .month-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 10px; }
+  .month-nav button {
+    background: var(--c-card); border: 2px solid var(--c-light); border-radius: 50%; width: 36px; height: 36px;
+    font-size: calc(18px * var(--fs, 1)); cursor: pointer; color: var(--c-primary); box-shadow: 2px 2px 0 var(--c-light); transition: transform 0.12s;
+  }
+  .month-nav button:hover { transform: scale(1.08); border-color: var(--c-accent); }
+  .month-label { font-size: calc(30px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); letter-spacing: 0.04em; min-width: 180px; text-align: center; }
+
+  /* 달력 */
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .dow { text-align: center; font-size: calc(20px * var(--fs, 1)); font-weight: 700; padding: 6px 0 8px; color: var(--c-primary); letter-spacing: 0.05em; }
+  .dow.sun { color: #d0204a; }
+  .dow.sat { color: #9040c0; }
+
+  .day {
+    background: var(--c-card); border-radius: 10px; padding: 5px; min-height: 82px; cursor: pointer;
+    border: 2px solid var(--c-light); transition: all 0.12s; display: flex; flex-direction: column; position: relative; overflow: hidden;
+  }
+  .day::after {
+    content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 0.12s;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 6px, rgba(192,24,88,0.08) 6px, rgba(192,24,88,0.08) 7px), repeating-linear-gradient(-45deg, transparent, transparent 6px, rgba(192,24,88,0.08) 6px, rgba(192,24,88,0.08) 7px);
+    pointer-events: none; border-radius: 8px;
+  }
+  .day.selected::after { opacity: 1; }
+  .day:hover { border-color: var(--c-accent); transform: scale(1.02); }
+  .day.empty { background: transparent; cursor: default; border: none; }
+  .day.today { border-color: var(--c-primary); background: var(--c-card); box-shadow: 0 0 0 3px var(--c-light), inset 0 0 0 1px var(--c-accent); }
+  .day.selected { border-color: var(--c-primary); background: linear-gradient(160deg, var(--c-card) 0%, var(--c-bg) 100%); box-shadow: 0 3px 12px rgba(192,24,88,0.2); }
+  .day.sun .day-num { color: #d0204a; }
+  .day.sat .day-num { color: #9040c0; }
+  .day-num { font-size: calc(15px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); }
+
+  .day-stars-summary { font-size: calc(13px * var(--fs, 1)); margin-top: 8px; display: flex; flex-direction: column; gap: 4px; padding-top: 3px; border-top: 1.5px dashed var(--c-light); }
+  .summary-line { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #d090b0; font-weight: 500; }
+  .summary-line.has-stars { color: var(--c-primary); font-weight: 700; }
+  .summary-line.no-data { color: #e0b0c8; }
+  .cal-fav-name { font-size: calc(9px * var(--fs, 1)); color: #e090a8; margin-left: 3px; font-weight: 600; }
+
+  /* 메인 레이아웃 */
+  .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .main-content > * { min-width: 0; }
+  @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; } }
+
+  .detail, .comments-box {
+    background: var(--c-card); border-radius: 16px; padding: 18px; border: 2px solid var(--c-light);
+    display: flex; flex-direction: column; position: relative; box-shadow: 3px 3px 0 var(--c-light);
+  }
+  .detail::before, .comments-box::before {
+    content: '♥'; position: absolute; top: -10px; right: 10px; font-size: calc(20px * var(--fs, 1)); color: var(--c-accent); line-height: 1;
+  }
+
+  .detail-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .detail-date-nav { display: inline-flex; align-items: center; gap: 7px; }
+  .detail-date { font-size: calc(19px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); }
+  .day-arrow {
+    background: var(--c-card); border: 2px solid var(--c-light); border-radius: 50%;
+    width: 28px; height: 28px; font-size: calc(16px * var(--fs, 1)); line-height: 1; cursor: pointer; color: var(--c-primary);
+    box-shadow: 1px 1px 0 var(--c-light); transition: transform 0.12s; flex: none; padding: 0;
+  }
+  .day-arrow:hover { transform: scale(1.12); border-color: var(--c-accent); }
+  .detail-kcal { font-size: calc(14px * var(--fs, 1)); color: var(--c-accent); font-weight: 600; }
+
+  /* 탭 */
+  .meal-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab {
+    padding: 6px 15px; border-radius: 20px; font-size: calc(17px * var(--fs, 1)); font-weight: 700; cursor: pointer;
+    border: 2px solid var(--c-light); background: var(--c-card); color: #c090a8; transition: all 0.12s;
+    display: flex; align-items: center; gap: 4px; letter-spacing: 0.03em;
+    font-family: var(--app-font, 'Dongle', sans-serif);
+  }
+  .tab:hover { border-color: var(--c-accent); color: var(--c-primary); transform: scale(1.03); }
+  .tab.active-b { background: var(--c-bg); color: var(--c-primary); border-color: var(--c-accent); box-shadow: 2px 2px 0 var(--c-light); }
+  .tab.active-l { background: var(--c-bg); color: var(--c-primary); border-color: var(--c-accent); box-shadow: 2px 2px 0 var(--c-light); }
+  .tab.active-d { background: var(--c-bg); color: var(--c-primary); border-color: var(--c-accent); box-shadow: 2px 2px 0 var(--c-light); }
+  .tab-stars { font-size: calc(13px * var(--fs, 1)); font-weight: 700; color: var(--c-accent); }
+
+  /* 메뉴 목록 */
+  .menu-list { display: flex; flex-direction: column; gap: 4px; }
+  .menu-row {
+    display: flex; justify-content: space-between; align-items: center; padding: 10px 13px;
+    background: var(--c-bg); border-radius: 10px; font-size: calc(17px * var(--fs, 1)); cursor: pointer; user-select: none;
+    border: 1.5px solid transparent; transition: all 0.1s;
+  }
+  .menu-row:hover { background: var(--c-bg); border-color: var(--c-light); }
+  .menu-row.favorite { background: var(--c-bg); border-color: var(--c-accent); }
+  .menu-left { display: flex; align-items: center; gap: 4px; min-width: 0; }
+  .star-icon { color: var(--c-light); font-size: calc(15px * var(--fs, 1)); transition: color 0.1s; }
+  .menu-row.favorite .star-icon { color: var(--c-accent); }
+  .menu-name { font-weight: 700; color: var(--c-text); }
+  .allergy { font-size: calc(11px * var(--fs, 1)); color: #c8a0b4; margin-left: 8px; white-space: nowrap; }
+  .global-stars { font-size: calc(12px * var(--fs, 1)); color: var(--c-accent); margin-left: 5px; font-weight: 700; }
+  .crown { font-size: calc(13px * var(--fs, 1)); margin-right: 2px; }
+  .no-meal { text-align: center; color: #d8a8c0; padding: 24px 0; font-size: calc(19px * var(--fs, 1)); }
+
+  /* 댓글 */
+  .comments-title { font-size: calc(22px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); margin-bottom: 10px; }
+  .comment-list { flex: 1; overflow-y: auto; max-height: 280px; display: flex; flex-direction: column; gap: 7px; margin-bottom: 10px; padding-right: 4px; }
+  .comment-item { background: var(--c-bg); border-radius: 10px; padding: 9px 12px; font-size: calc(17px * var(--fs, 1)); color: var(--c-text); border: 1.5px solid var(--c-light); overflow-wrap: break-word; word-break: break-word; }
+  .comment-meta { display: flex; justify-content: space-between; font-size: calc(14px * var(--fs, 1)); color: #c890a8; margin-bottom: 6px; font-weight: 600; }
+  .no-comments { text-align: center; color: #d8a8c0; padding: 24px 0; font-size: calc(18px * var(--fs, 1)); line-height: 1.4; }
+  .comment-input-row { display: flex; gap: 6px; }
+  .comment-input-row input {
+    flex: 1; min-width: 0; border: 2px solid var(--c-light); border-radius: 12px; padding: 8px 12px; font-size: calc(19px * var(--fs, 1));
+    font-family: inherit; color: var(--c-text); background: #fffafc; outline: none;
+  }
+  .comment-input-row input:focus { border-color: var(--c-accent); }
+  .comment-input-row button {
+    border: 2px solid var(--c-accent); background: var(--c-bg); color: var(--c-primary); border-radius: 12px; padding: 8px 16px;
+    font-size: calc(19px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; transition: transform 0.1s;
+    flex-shrink: 0; white-space: nowrap;
+  }
+  .comment-input-row button:hover { transform: scale(1.04); }
+  .nick-row { font-size: calc(15px * var(--fs, 1)); color: #c890a8; margin-bottom: 8px; font-weight: 600; }
+  .nick-row a { color: var(--c-accent); cursor: pointer; text-decoration: underline; }
+
+  /* 타이머 */
+  .timer-box {
+    background: linear-gradient(160deg, var(--c-card) 0%, var(--c-bg) 100%); border: 2px solid var(--c-light); border-radius: 16px;
+    padding: 14px 18px; margin-top: 16px; box-shadow: 3px 3px 0 var(--c-light); text-align: center; position: relative;
+  }
+  .timer-label { font-size: calc(22px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); }
+  .timer-meal-name { font-size: calc(18px * var(--fs, 1)); color: var(--c-accent); font-weight: 600; }
+  .timer-menu-preview { font-size: calc(16px * var(--fs, 1)); color: #c07090; margin-top: 2px; min-height: 18px; }
+  .timer-count { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 6px; }
+  .timer-unit { display: flex; flex-direction: column; align-items: center; }
+  .timer-num { font-size: calc(36px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); background: #fff; border: 2px solid var(--c-light); border-radius: 8px; padding: 2px 8px; line-height: 1.1; min-width: 54px; }
+  .timer-unit-label { font-size: calc(12px * var(--fs, 1)); color: #d090b0; margin-top: 2px; font-weight: 600; }
+  .timer-sep { font-size: calc(28px * var(--fs, 1)); font-weight: 700; color: var(--c-light); padding-bottom: 6px; }
+  .timer-edit { position: absolute; top: 10px; right: 14px; font-size: calc(14px * var(--fs, 1)); color: #d090b0; cursor: pointer; text-decoration: underline; font-weight: 600; }
+
+  /* 설정 / 학교검색 모달 */
+  .overlay { position: fixed; inset: 0; background: rgba(120,20,60,0.35); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .modal {
+    background: var(--c-card); border: 3px solid var(--c-accent); border-radius: 18px; padding: 22px; width: 100%; max-width: 460px;
+    box-shadow: 0 10px 30px rgba(160,0,80,0.3); max-height: 86vh; overflow-y: auto; position: relative;
+  }
+  .modal h2 { font-size: calc(28px * var(--fs, 1)); color: var(--c-primary); margin-bottom: 6px; }
+  .modal p.hint { font-size: calc(16px * var(--fs, 1)); color: #c07090; margin-bottom: 14px; line-height: 1.45; }
+  .modal label { display: block; font-size: calc(17px * var(--fs, 1)); font-weight: 700; color: #b04070; margin: 12px 0 4px; }
+  .modal input[type=text], .modal input[type=password] {
+    width: 100%; border: 2px solid var(--c-light); border-radius: 12px; padding: 9px 12px; font-size: calc(18px * var(--fs, 1));
+    font-family: inherit; color: var(--c-text); background: #fffafc; outline: none;
+  }
+  .modal input:focus { border-color: var(--c-accent); }
+  .modal .row-btns { display: flex; gap: 8px; margin-top: 18px; }
+  .btn-primary { flex: 1; border: 2px solid var(--c-accent); background: var(--c-bg); color: var(--c-primary); border-radius: 12px; padding: 10px; font-size: calc(20px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; }
+  .btn-ghost { border: 2px solid var(--c-light); background: var(--c-card); color: #c07090; border-radius: 12px; padding: 10px 16px; font-size: calc(18px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; }
+  .search-result { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .school-item {
+    background: var(--c-bg); border: 2px solid var(--c-light); border-radius: 10px; padding: 10px 12px; cursor: pointer; transition: all 0.1s;
+  }
+  .school-item:hover { border-color: var(--c-accent); background: var(--c-bg); transform: translateX(2px); }
+  .school-item .nm { font-size: calc(20px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); }
+  .school-item .meta { font-size: calc(14px * var(--fs, 1)); color: #c890a8; margin-top: 4px; }
+  .time-edit-row { display: flex; gap: 10px; align-items: center; margin: 8px 0; font-size: calc(18px * var(--fs, 1)); color: #b04070; font-weight: 700; }
+  .time-edit-row input[type=time] { border: 2px solid var(--c-light); border-radius: 10px; padding: 6px 8px; font-size: calc(18px * var(--fs, 1)); font-family: inherit; color: #4a2030; background: #fffafc; }
+
+  /* 설정 안내 카드 (학교 미선택 시) */
+  .setup-card {
+    background: var(--c-card); border: 2px dashed var(--c-accent); border-radius: 18px; padding: 30px 22px; text-align: center;
+    box-shadow: 3px 3px 0 var(--c-light); max-width: 480px; margin: 10px auto;
+  }
+  .setup-card h2 { font-size: calc(30px * var(--fs, 1)); color: var(--c-primary); margin-bottom: 8px; }
+  .setup-card p { font-size: calc(18px * var(--fs, 1)); color: #c07090; line-height: 1.5; margin-bottom: 18px; }
+  .setup-card .step { font-size: calc(17px * var(--fs, 1)); color: #a04070; text-align: left; margin: 6px 0; padding-left: 4px; }
+
+  .loading { text-align: center; color: #d090b0; padding: 30px 0; font-size: calc(20px * var(--fs, 1)); }
+
+  /* 도움말 */
+  .help-banner {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-primary));
+    color: #fff; border-radius: 14px; padding: 14px 16px; margin: 4px 0 16px;
+    display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  .help-banner .big { font-size: calc(30px * var(--fs, 1)); line-height: 1; }
+  .help-banner .txt { font-size: calc(17px * var(--fs, 1)); font-weight: 700; line-height: 1.35; }
+  .help-banner .txt small { display: block; font-weight: 400; font-size: calc(14px * var(--fs, 1)); opacity: 0.92; margin-top: 2px; }
+  .help-step { display: flex; gap: 11px; align-items: flex-start; margin: 13px 0; }
+  .help-step .n {
+    flex: none; width: 27px; height: 27px; border-radius: 50%; background: var(--c-accent); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: calc(16px * var(--fs, 1)); font-weight: 700; margin-top: 1px;
+  }
+  .help-step .body { font-size: calc(17px * var(--fs, 1)); color: var(--c-text); line-height: 1.4; }
+  .help-step .body b { color: var(--c-primary); }
+  .help-divider { border: none; border-top: 1.5px dashed var(--c-light); margin: 16px 0; }
+  .ex-btn { display: inline-block; margin-top: 7px; border: 2px solid var(--c-accent); background: var(--c-bg); color: var(--c-primary); border-radius: 10px; padding: 4px 12px; font-size: calc(15px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; }
+  .ex-btn:hover { transform: scale(1.03); }
+  .example-day { background: var(--c-card); border: 2px solid var(--c-light); border-radius: 14px; padding: 13px 16px; box-shadow: 3px 3px 0 var(--c-light); text-align: left; max-width: 230px; margin: 0 auto; }
+  .example-day .day-top { margin-bottom: 7px; }
+  .example-day .day-num { font-size: calc(21px * var(--fs, 1)); }
+  .example-day .cal-memo { font-size: calc(14px * var(--fs, 1)); }
+  .example-day .day-stars-summary { font-size: calc(16px * var(--fs, 1)); gap: 7px; padding-top: 7px; margin-top: 0; }
+  .example-day .summary-line { gap: 5px; }
+  .example-day .cal-fav-name { font-size: calc(12px * var(--fs, 1)); max-width: 95px; }
+
+  /* 달력칸 메모 진입점 */
+  .day-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .cal-memo { cursor: pointer; font-size: calc(12px * var(--fs, 1)); flex: 1; min-width: 0; display: flex; justify-content: flex-end; }
+  .cal-memo .ttl { display: inline-block; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--c-accent); font-weight: 700; text-align: right; }
+  .cal-memo .plus { color: var(--c-light); font-weight: 700; font-size: calc(15px * var(--fs, 1)); line-height: 1; }
+  .cal-memo:hover .plus { color: var(--c-accent); }
+
+  /* 메모 모달 */
+  .modal-wide { max-width: 760px; }
+  .memo-title-input { width: 100%; font-size: calc(25px * var(--fs, 1)); font-weight: 700; border: none; border-bottom: 2px solid var(--c-light); background: transparent; color: var(--c-primary); padding: 2px 2px 8px; outline: none; font-family: inherit; }
+  .memo-title-input:focus { border-bottom-color: var(--c-accent); }
+  .memo-body { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+  @media (max-width: 640px) { .memo-body { grid-template-columns: 1fr; } }
+  .memo-col h3 { font-size: calc(18px * var(--fs, 1)); color: var(--c-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+
+  /* 투두 */
+  .todo-add { display: flex; gap: 6px; margin-bottom: 8px; }
+  .todo-add input { flex: 1; border: 2px solid var(--c-light); border-radius: 10px; padding: 7px 10px; font-size: calc(16px * var(--fs, 1)); font-family: inherit; color: var(--c-text); background: #fffafc; outline: none; }
+  .todo-add input:focus { border-color: var(--c-accent); }
+  .todo-add button { border: 2px solid var(--c-accent); background: var(--c-bg); color: var(--c-primary); border-radius: 10px; padding: 0 14px; font-size: calc(20px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; }
+  .todo-item { display: flex; align-items: center; gap: 8px; padding: 5px 2px; font-size: calc(17px * var(--fs, 1)); }
+  .todo-check { width: 22px; height: 22px; border: 2px solid var(--c-accent); border-radius: 6px; cursor: pointer; flex: none; display: flex; align-items: center; justify-content: center; color: var(--c-primary); font-size: calc(15px * var(--fs, 1)); background: #fff; }
+  .todo-item.done .todo-text { text-decoration: line-through; color: #c0a0b0; }
+  .todo-text { flex: 1; color: var(--c-text); word-break: break-all; }
+  .todo-del { cursor: pointer; color: #d8a8c0; font-size: calc(15px * var(--fs, 1)); flex: none; }
+  .memo-note { width: 100%; min-height: 130px; border: 2px solid var(--c-light); border-radius: 12px; padding: 10px; font-size: calc(16px * var(--fs, 1)); font-family: inherit; color: var(--c-text); background: #fffafc; outline: none; resize: vertical; }
+  .memo-note:focus { border-color: var(--c-accent); }
+
+  /* 타임테이블 */
+  .tt-tools { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; flex-wrap: wrap; }
+  .tt-color { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 0 1.5px var(--c-light); transition: transform 0.1s; }
+  .tt-color.sel { box-shadow: 0 0 0 2.5px var(--c-primary); transform: scale(1.12); }
+  .tt-trash { margin-left: 6px; cursor: pointer; font-size: calc(16px * var(--fs, 1)); border: 2px solid var(--c-light); background: var(--c-card); border-radius: 8px; padding: 3px 9px; color: var(--c-primary); }
+  .tt-repeat { margin-left: auto; cursor: pointer; font-size: calc(14px * var(--fs, 1)); border: 2px solid var(--c-accent); background: var(--c-bg); color: var(--c-primary); border-radius: 8px; padding: 3px 10px; font-weight: 700; font-family: inherit; }
+  .rep-label { display: block; font-size: calc(16px * var(--fs, 1)); font-weight: 700; color: var(--c-primary); margin: 14px 0 6px; }
+  .rep-opts { display: flex; flex-direction: column; gap: 8px; }
+  .rep-opts label { font-size: calc(17px * var(--fs, 1)); color: var(--c-text); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .rep-opts input[type=radio] { width: 18px; height: 18px; accent-color: var(--c-accent); flex: none; }
+  .rep-weeks { font-size: calc(17px * var(--fs, 1)); color: var(--c-text); display: flex; align-items: center; gap: 8px; }
+  .rep-weeks input { width: 64px; border: 2px solid var(--c-light); border-radius: 10px; padding: 6px 8px; font-size: calc(17px * var(--fs, 1)); font-family: inherit; color: var(--c-text); background: #fffafc; outline: none; text-align: center; }
+  .tt-grid { border: 1.5px solid var(--c-light); border-radius: 8px; overflow: visible; user-select: none; touch-action: none; position: relative; }
+  .tt-row { display: flex; align-items: stretch; border-top: 1px solid var(--c-light); }
+  .tt-row:first-child { border-top: none; }
+  .tt-hour { width: 30px; flex: none; font-size: calc(12px * var(--fs, 1)); color: #b08098; display: flex; align-items: center; justify-content: center; background: var(--c-bg); }
+  .tt-cells { flex: 1; display: grid; grid-template-columns: repeat(6, 1fr); position: relative; }
+  .tt-cell { height: 20px; border-left: 1px solid var(--c-light); cursor: pointer; position: relative; }
+  .tt-cell:first-child { border-left: none; }
+  .tt-cell.pending { outline: 2px solid var(--c-primary); outline-offset: -2px; z-index: 2; }
+  .tt-cell.preview { outline: 2px dashed var(--c-primary); outline-offset: -2px; z-index: 2; }
+  .tt-labels { position: absolute; left: 30px; right: 0; top: 0; bottom: 0; pointer-events: none; }
+  .tt-memo-label { position: absolute; left: 0; right: 0; font-size: calc(15px * var(--fs, 1)); line-height: 21px; color: #4a2030; font-weight: 700; white-space: normal; word-break: break-word; pointer-events: none; text-shadow: 0 0 3px rgba(255,255,255,0.95), 0 0 3px rgba(255,255,255,0.95); padding: 0 3px 0 9px; }
+  .tt-hint { font-size: calc(17px * var(--fs, 1)); color: #c090a8; margin-top: 9px; line-height: 1.5; }
+  .tt-edit { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .tt-edit input { flex: 1; min-width: 120px; border: 2px solid var(--c-accent); border-radius: 10px; padding: 6px 10px; font-size: calc(15px * var(--fs, 1)); font-family: inherit; color: var(--c-text); background: #fffafc; outline: none; }
+  .tt-edit-del { border: 2px solid #e08aa8; background: #ffe0ea; color: #b02050; border-radius: 10px; padding: 6px 10px; font-size: calc(15px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; }
+  .tt-edit-ok { border: 2px solid var(--c-accent); background: var(--c-bg); color: var(--c-primary); border-radius: 10px; padding: 6px 12px; font-size: calc(15px * var(--fs, 1)); font-weight: 700; cursor: pointer; font-family: inherit; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #fde8f0; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--c-accent); border-radius: 4px; }
+
+  /* ===== 오늘의 운세 (포춘쿠키) ===== */
+  .fortune-stage { position: relative; width: 260px; height: 190px; margin: 8px auto 4px; display: flex; align-items: center; justify-content: center; overflow: visible; }
+  .fortune-cookie { font-size: 96px; line-height: 1; cursor: pointer; user-select: none; transition: transform 0.15s; filter: drop-shadow(0 6px 10px rgba(220,120,160,0.35)); }
+  .fortune-cookie:hover { transform: scale(1.06) rotate(-3deg); }
+  .fortune-cookie.shake { animation: cookieShake 0.4s ease-in-out; }
+  @keyframes cookieShake {
+    0%,100% { transform: rotate(0); }
+    20% { transform: rotate(-9deg) scale(1.03); }
+    40% { transform: rotate(8deg) scale(1.04); }
+    60% { transform: rotate(-6deg) scale(1.05); }
+    80% { transform: rotate(4deg) scale(1.03); }
+  }
+  /* 쿠키 반쪽 - 진짜 깨지듯 반으로 나뉘어 양옆으로 날아가 사라짐 */
+  .cookie-half { position: absolute; top: 50%; left: 50%; font-size: 96px; line-height: 1; filter: drop-shadow(0 6px 10px rgba(220,120,160,0.35)); pointer-events: none; z-index: 1; }
+  .cookie-half.left  { transform: translate(-50%,-50%); clip-path: inset(0 50% 0 0); }
+  .cookie-half.right { transform: translate(-50%,-50%); clip-path: inset(0 0 0 50%); }
+  .cookie-half.crack-left  { animation: crackLeft 0.55s cubic-bezier(.4,0,.7,.5) forwards; }
+  .cookie-half.crack-right { animation: crackRight 0.55s cubic-bezier(.4,0,.7,.5) forwards; }
+  @keyframes crackLeft  {
+    0%   { transform: translate(-50%,-50%) rotate(0); opacity: 1; }
+    25%  { transform: translate(-58%,-50%) rotate(-8deg); opacity: 1; }
+    100% { transform: translate(-320%,-30%) rotate(-55deg); opacity: 0; }
+  }
+  @keyframes crackRight {
+    0%   { transform: translate(-50%,-50%) rotate(0); opacity: 1; }
+    25%  { transform: translate(-42%,-50%) rotate(8deg); opacity: 1; }
+    100% { transform: translate(220%,-30%) rotate(55deg); opacity: 0; }
+  }
+  /* 운세 종이 - 가운데 딱 */
+  .fortune-paper {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.3); opacity: 0; z-index: 2;
+    width: 210px; background: linear-gradient(#fffdf7,#fff6e9); border: 1.5px solid #f0d9a8;
+    border-radius: 6px; padding: 16px 16px 18px; box-shadow: 0 8px 20px rgba(180,140,60,0.25);
+    text-align: center;
+  }
+  .fortune-paper.show { animation: paperOut 0.6s cubic-bezier(.2,1.4,.5,1) 0.4s forwards; }
+  @keyframes paperOut { to { transform: translate(-50%,-50%) scale(1) rotate(-1.5deg); opacity: 1; } }
+  .fortune-paper .fp-cat { font-size: calc(13px * var(--fs,1)); color: #c99a3a; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .fortune-paper .fp-msg { font-size: calc(18px * var(--fs,1)); color: #6b5426; line-height: 1.5; font-weight: 600; padding: 2px 0; }
+  .fortune-paper::before { content: '✦'; position: absolute; top: 6px; left: 10px; color: #e8c877; font-size: 12px; }
+  .fortune-paper::after  { content: '✦'; position: absolute; top: 6px; right: 10px; color: #e8c877; font-size: 12px; }
+  .fortune-hint { text-align: center; color: var(--c-primary); font-size: calc(15px * var(--fs,1)); margin-top: 2px; font-weight: 600; }
+  .fortune-again { text-align: center; color: #c890a8; font-size: calc(13px * var(--fs,1)); margin-top: 10px; }
+</style>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, set, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCULR5NJypeyXgljZWf7ZyHL3uE3XybfZs",
+  authDomain: "meal-51543.firebaseapp.com",
+  databaseURL: "https://meal-51543-default-rtdb.firebaseio.com",
+  projectId: "meal-51543",
+  storageBucket: "meal-51543.firebasestorage.app",
+  messagingSenderId: "382748016180",
+  appId: "1:382748016180:web:d6561ea3880ccffb82d461"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+window._fbDb = db;
+window._fbRef = ref;
+window._fbPush = push;
+window._fbOnValue = onValue;
+window._fbSet = set;
+window._fbRunTransaction = runTransaction;
+window._firebaseReady = true;
+if (window._pendingInit) window._pendingInit();
+</script>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1><span id="appTitle">급식 알리미</span><button class="title-edit" onclick="openTitleEdit()" title="제목 바꾸기">✏️</button><span class="cute-only" id="appEmoji"> ヾ(≧▽≦*)</span></h1>
+    <p>전국 어느 학교든 · 메뉴 별점과 한줄평을 친구들과 공유해요 <span class="cute-only">ᓚᘏᗢ</span></p>
+  </header>
+
+  <div class="topbar">
+    <div class="school-pill" id="schoolPill" onclick="openSchoolModal()">🏫 <span id="schoolName">학교를 선택해요</span> ▾</div>
+    <button class="icon-btn fortune-btn" onclick="openFortune()" title="오늘의 운세">🥠</button>
+    <button class="icon-btn" onclick="openHelp()" title="사용법">?</button>
+    <button class="icon-btn" onclick="openSettings()" title="설정">⚙</button>
+  </div>
+
+  <div id="mainArea"></div>
+</div>
+
+<!-- 모달 마운트 지점 -->
+<div id="modalMount"></div>
+
+<script>
+/* ============================================================
+   급식 알리미 (전국판) — 나이스 Open API 연동
+   - 인증키: open.neis.go.kr 에서 발급 → 설정(⚙)에 입력
+   - 프록시: CORS 우회용. 비워두면 직접 호출(보통 막힘)
+   ============================================================ */
+
+// ---------- 설정 ----------
+// ============================================================
+//  ▼▼▼ 여기 한 줄만 본인 Cloudflare Worker 주소로 바꿔주세요 ▼▼▼
+const PROXY = "https://meal-proxy.mymmj8423pshs.workers.dev";
+//  ▲▲▲ 나이스 인증키는 워커 안에 숨겨져 있어요 (사용자 입력 불필요) ▲▲▲
+// ============================================================
+
+const LS = {
+  school: 'meal_school',
+  nick:   'meal_nick',
+};
+function getSchool(){ try { return JSON.parse(localStorage.getItem(LS.school) || 'null'); } catch(e){ return null; } }
+function setSchool(s){ localStorage.setItem(LS.school, JSON.stringify(s)); }
+
+let myNick = localStorage.getItem(LS.nick) || ('익명' + Math.floor(Math.random()*9000+1000));
+localStorage.setItem(LS.nick, myNick);
+
+// ---------- 상태 ----------
+const ORDER = ['조식','중식','석식'];
+const MEALCODE = { '조식':'b', '중식':'l', '석식':'d' };
+const DEFAULT_TIMES = { b:'08:00', l:'12:30', d:'18:30' };
+
+let school = getSchool();                 // {office, code, name, kind, addr}
+const _now = new Date();
+let viewYear  = _now.getFullYear();
+let viewMonth = _now.getMonth() + 1;      // 1~12
+let meals = { 조식:{}, 중식:{}, 석식:{} }; // {조식:{1:{items,kcal}}, ...}
+let selectedDay = null;
+let selectedMeal = '중식';
+let globalStars = {};                      // 선택 학교의 별점 { "20260601_l_백미밥": 3 }
+let favorites = {};                        // 내 별표 (localStorage)
+let mealTimes = { ...DEFAULT_TIMES };      // 선택 학교의 급식시간
+
+// ---------- 유틸 ----------
+function pad(n){ return String(n).padStart(2,'0'); }
+function ymdStr(y,m,d){ return `${y}${pad(m)}${pad(d)}`; }
+function schoolKey(){ return school ? `${school.office}_${school.code}` : ''; }
+function favLSKey(){ return `meal_favs_${schoolKey()}`; }
+function cleanName(s){ return s.replace(/\s*\(\s*[\d.\s]+\)\s*$/, '').replace(/\s+/g,' ').trim(); }
+function getAllergy(s){ const m = s.match(/\(\s*([\d.\s]+)\)\s*$/); return m ? m[1].replace(/\s/g,'') : ''; }
+function safeKey(s){ return cleanName(s).replace(/[.#$/\[\]]/g,'_'); }
+function escapeHtml(str){ return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
+
+// ---------- 나이스 호출 ----------
+function neisUrl(endpoint, params){
+  const base = `https://open.neis.go.kr/hub/${endpoint}`;
+  const qs = new URLSearchParams({ Type:'json', pIndex:'1', pSize:'500', ...params }).toString();
+  const full = `${base}?${qs}`;
+  return PROXY.replace(/\/$/,'') + '/?url=' + encodeURIComponent(full);
+}
+async function neisFetch(endpoint, params){
+  const res = await fetch(neisUrl(endpoint, params));
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+async function searchSchools(name){
+  const json = await neisFetch('schoolInfo', { SCHUL_NM:name });
+  return json?.schoolInfo?.[1]?.row || [];
+}
+
+async function loadMeals(){
+  meals = { 조식:{}, 중식:{}, 석식:{} };
+  if (!school) { renderMain(); return; }
+  renderMain(true); // 로딩 표시
+  try {
+    const last = new Date(viewYear, viewMonth, 0).getDate();
+    const from = ymdStr(viewYear, viewMonth, 1);
+    const to   = ymdStr(viewYear, viewMonth, last);
+    const json = await neisFetch('mealServiceDietInfo', {
+      ATPT_OFCDC_SC_CODE: school.office,
+      SD_SCHUL_CODE: school.code,
+      MLSV_FROM_YMD: from,
+      MLSV_TO_YMD: to,
+    });
+    const rows = json?.mealServiceDietInfo?.[1]?.row || [];
+    rows.forEach(r => {
+      const nm = r.MMEAL_SC_NM || '';
+      const day = parseInt(String(r.MLSV_YMD).slice(6,8), 10);
+      const items = String(r.DDISH_NM || '').split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean);
+      const kcal = Math.round((parseFloat(String(r.CAL_INFO || '').replace(/[^\d.]/g,'')) || 0) * 10) / 10;
+      const key = nm.includes('조') ? '조식' : nm.includes('중') ? '중식' : nm.includes('석') ? '석식' : null;
+      if (!key) return;
+      meals[key][day] = { items, kcal };
+    });
+  } catch (e) {
+    console.error(e);
+    renderMain(false, '급식을 못 불러왔어요 😢 인증키나 프록시 설정을 확인해 주세요.\n(' + e.message + ')');
+    return;
+  }
+  renderMain();
+  if (selectedDay && selectedDay <= new Date(viewYear, viewMonth, 0).getDate()) selectDay(selectedDay, true);
+}
+
+// ---------- 메인 렌더 ----------
+function renderMain(loading, errorMsg){
+  const area = document.getElementById('mainArea');
+
+  // 학교 미선택 → 안내
+  if (!school) {
+    area.innerHTML = `
+      <div class="setup-card">
+        <h2>시작하기 🌸</h2>
+        <p>우리 학교를 검색해서 선택하면<br>바로 급식을 볼 수 있어요!</p>
+        <div class="row-btns" style="justify-content:center; margin-top:8px;">
+          <button class="btn-primary" style="flex:none;" onclick="openSchoolModal()">🏫 학교 검색</button>
+        </div>
+      </div>`;
+    document.getElementById('schoolName').textContent = '학교를 선택해요';
+    return;
+  }
+
+  document.getElementById('schoolName').textContent = school.name;
+
+  const monthLabel = `${viewYear}년 ${viewMonth}월`;
+  let calInner = '';
+  if (loading) {
+    calInner = `<div class="loading">급식 불러오는 중... 🍱</div>`;
+  } else if (errorMsg) {
+    calInner = `<div class="loading" style="white-space:pre-line; color:#d04080;">${escapeHtml(errorMsg)}</div>`;
+  } else {
+    calInner = buildCalendarHTML();
+  }
+
+  area.innerHTML = `
+    <div class="month-nav">
+      <button onclick="changeMonth(-1)">‹</button>
+      <div class="month-label">${monthLabel}</div>
+      <button onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="cal-grid" id="calGrid">
+      <div class="dow sun">일</div><div class="dow">월</div><div class="dow">화</div>
+      <div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow sat">토</div>
+      ${calInner}
+    </div>
+    <div class="main-content" id="mainContent" style="display:${selectedDay ? 'grid' : 'none'};">
+      <div class="detail" id="detail"></div>
+      <div class="comments-box" id="commentsBox">
+        <div class="comments-title">💬 한줄평</div>
+        <div class="nick-row">내 별명: <b>${escapeHtml(myNick)}</b> <a onclick="changeNick()">바꾸기</a></div>
+        <div class="comment-list" id="commentList"><div class="no-comments">날짜를 선택해 주세요</div></div>
+        <div class="comment-input-row">
+          <input id="commentInput" placeholder="오늘 급식 어땠어요?" onkeydown="if(event.key==='Enter')jsAddComment()" maxlength="100">
+          <button onclick="jsAddComment()">등록</button>
+        </div>
+      </div>
+    </div>
+    ${buildTimerHTML()}
+  `;
+
+  if (selectedDay) { renderDetail(); connectCommentRoom(); }
+}
+
+function buildCalendarHTML(){
+  const firstDow = new Date(viewYear, viewMonth - 1, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth, 0).getDate();
+  const real = new Date();
+  const isThisMonth = real.getFullYear() === viewYear && (real.getMonth() + 1) === viewMonth;
+  const todayDate = real.getDate();
+
+  let html = '';
+  for (let i = 0; i < firstDow; i++) html += `<div class="day empty"></div>`;
+
+  const mealEmoji = { '조식':'♨', '중식':'´▽`♡', '석식':'♬' };
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dow = (firstDow + d - 1) % 7;
+    const cls = ['day'];
+    if (dow === 0) cls.push('sun');
+    if (dow === 6) cls.push('sat');
+    if (isThisMonth && d === todayDate) cls.push('today');
+    if (d === selectedDay) cls.push('selected');
+
+    const anyMeal = meals['조식'][d] || meals['중식'][d] || meals['석식'][d];
+    let lines;
+    if (!anyMeal) {
+      lines = `<div class="summary-line no-data">· · ·</div>`;
+    } else {
+      lines = ORDER.map(meal => {
+        if (!meals[meal][d]) return '';
+        const stars = getStarCount(d, meal);
+        let favName = '';
+        if (stars > 0) {
+          const favItem = meals[meal][d].items.find(it => favorites[favId(d, meal, it)]);
+          if (favItem) favName = `<span class="cal-fav-name">${escapeHtml(cleanName(favItem))}</span>`;
+        }
+        return `<div class="summary-line ${stars > 0 ? 'has-stars' : ''}">${mealEmoji[meal]} ${stars}${favName}</div>`;
+      }).join('');
+    }
+    html += `<div class="${cls.join(' ')}" id="day-cell-${d}" onclick="selectDay(${d})">
+      <div class="day-top"><span class="day-num">${d}</span>${calMemoHTML(d)}</div><div class="day-stars-summary">${lines}</div>
+    </div>`;
+  }
+  return html;
+}
+
+function buildTimerHTML(){
+  return `
+    <div class="timer-box">
+      <span class="timer-edit" onclick="openTimeEditor()">⏰ 급식시간 수정</span>
+      <div class="timer-label" id="timerLabel">⏳</div>
+      <div class="timer-meal-name" id="timerMealName"></div>
+      <div class="timer-menu-preview" id="timerMenuPreview"></div>
+      <div class="timer-count" id="timerCount">
+        <div class="timer-unit"><div class="timer-num" id="timerH">--</div><div class="timer-unit-label">시간</div></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><div class="timer-num" id="timerM">--</div><div class="timer-unit-label">분</div></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><div class="timer-num" id="timerS">--</div><div class="timer-unit-label">초</div></div>
+      </div>
+    </div>`;
+}
+
+// ---------- 날짜/끼니 선택 ----------
+function changeMonth(delta){
+  viewMonth += delta;
+  if (viewMonth < 1) { viewMonth = 12; viewYear--; }
+  if (viewMonth > 12) { viewMonth = 1; viewYear++; }
+  selectedDay = null;
+  loadMeals();
+}
+
+function selectDay(d, keepScroll){
+  selectedDay = d;
+  document.querySelectorAll('.day').forEach(el => {
+    el.classList.toggle('selected', el.id === `day-cell-${d}`);
+  });
+  const mc = document.getElementById('mainContent');
+  if (mc) mc.style.display = 'grid';
+  // 선택한 날 첫 유효 끼니로
+  if (!meals[selectedMeal][d]) {
+    const firstAvail = ORDER.find(m => meals[m][d]);
+    if (firstAvail) selectedMeal = firstAvail;
+  }
+  renderDetail();
+  connectCommentRoom();
+}
+
+function switchMeal(m){ selectedMeal = m; renderDetail(); connectCommentRoom(); }
+
+function favId(day, meal, item){ return `${ymdStr(viewYear,viewMonth,day)}_${MEALCODE[meal]}_${safeKey(item)}`; }
+
+function getStarCount(day, meal){
+  let count = 0;
+  if (!meals[meal] || !meals[meal][day]) return 0;
+  meals[meal][day].items.forEach(item => { if (favorites[favId(day, meal, item)]) count++; });
+  return count;
+}
+
+function toggleFavorite(day, meal, item){
+  const id = favId(day, meal, item);
+  const wasOn = !!favorites[id];
+  favorites[id] = !wasOn;
+  localStorage.setItem(favLSKey(), JSON.stringify(favorites));
+
+  // Firebase 공유 별점 증감 (학교별)
+  if (window._fbDb && window._fbRunTransaction && schoolKey()) {
+    const starPath = `stars/${schoolKey()}/${id}`;
+    const starRef = window._fbRef(window._fbDb, starPath);
+    window._fbRunTransaction(starRef, cur => Math.max(0, (cur || 0) + (wasOn ? -1 : 1)));
+  }
+  renderDetail();
+  refreshCalendarCell(day);
+}
+
+function refreshCalendarCell(day){
+  const cell = document.getElementById(`day-cell-${day}`);
+  if (!cell) return;
+  const mealEmoji = { '조식':'♨', '중식':'´▽`♡', '석식':'♬' };
+  const lines = ORDER.map(meal => {
+    if (!meals[meal][day]) return '';
+    const stars = getStarCount(day, meal);
+    let favName = '';
+    if (stars > 0) {
+      const favItem = meals[meal][day].items.find(it => favorites[favId(day, meal, it)]);
+      if (favItem) favName = `<span class="cal-fav-name">${escapeHtml(cleanName(favItem))}</span>`;
+    }
+    return `<div class="summary-line ${stars > 0 ? 'has-stars' : ''}">${mealEmoji[meal]} ${stars}${favName}</div>`;
+  }).join('');
+  cell.querySelector('.day-stars-summary').innerHTML = lines || `<div class="summary-line no-data">· · ·</div>`;
+}
+
+function renderDetail(){
+  const detailEl = document.getElementById('detail');
+  if (!detailEl || !selectedDay) return;
+  const d = selectedDay;
+  const firstDow = new Date(viewYear, viewMonth - 1, 1).getDay();
+  const DOW = ['일','월','화','수','목','금','토'];
+  const dow = DOW[(firstDow + d - 1) % 7];
+  const data = meals[selectedMeal][d];
+  const tabClasses = { '조식':'active-b', '중식':'active-l', '석식':'active-d' };
+
+  const tabs = ORDER.map(m => {
+    const avail = !!meals[m][d];
+    const stars = getStarCount(d, m);
+    return `<button class="tab${m===selectedMeal?' '+tabClasses[m]:''}" style="${avail?'':'opacity:.4;'}" onclick="switchMeal('${m}')">${m} ${stars>0?`<span class="tab-stars">★${stars}</span>`:''}</button>`;
+  }).join('');
+
+  let rows = '';
+  if (data) {
+    const starCounts = data.items.map(item => globalStars[favId(d, selectedMeal, item)] || 0);
+    const maxStars = Math.max(0, ...starCounts);
+    rows = data.items.map((item, idx) => {
+      const isFav = !!favorites[favId(d, selectedMeal, item)];
+      const count = starCounts[idx];
+      const isCrown = maxStars > 0 && count === maxStars;
+      const starBadge = count > 0 ? `<span class="global-stars">(별 ${count})</span>` : '';
+      const crown = isCrown ? `<span class="crown">👑</span>` : '';
+      const allergy = getAllergy(item);
+      return `<div class="menu-row ${isFav ? 'favorite' : ''}" onclick="toggleFavorite(${d}, '${selectedMeal}', ${JSON.stringify(item).replace(/"/g,'&quot;')})">
+        <div class="menu-left"><span class="star-icon">★</span><span class="menu-name">${crown}${escapeHtml(cleanName(item))}</span>${starBadge}</div>
+        ${allergy ? `<span class="allergy">${allergy}</span>` : ''}
+      </div>`;
+    }).join('');
+  } else {
+    rows = `<div class="no-meal">${selectedMeal} 정보가 없어요 🍃</div>`;
+  }
+
+  detailEl.innerHTML = `
+    <div class="detail-header"><span class="detail-date-nav"><button class="day-arrow" onclick="changeDay(-1)" title="이전 날">‹</button><span class="detail-date">${viewMonth}월 ${d}일 (${dow})</span><button class="day-arrow" onclick="changeDay(1)" title="다음 날">›</button></span>${data && data.kcal ? `<span class="detail-kcal">🔥 ${data.kcal} kcal</span>` : ''}</div>
+    <div class="meal-tabs">${tabs}</div>
+    <div class="menu-list">${rows}</div>`;
+}
+
+// ---------- 하루씩 이동 ----------
+function changeDay(delta){
+  if (!selectedDay) return;
+  const daysInMonth = new Date(viewYear, viewMonth, 0).getDate();
+  const nd = selectedDay + delta;
+  if (nd < 1) {
+    // 이전 달 마지막 날로
+    viewMonth--; if (viewMonth < 1) { viewMonth = 12; viewYear--; }
+    selectedDay = new Date(viewYear, viewMonth, 0).getDate();
+    loadMeals();
+  } else if (nd > daysInMonth) {
+    // 다음 달 1일로
+    viewMonth++; if (viewMonth > 12) { viewMonth = 1; viewYear++; }
+    selectedDay = 1;
+    loadMeals();
+  } else {
+    selectDay(nd);
+    document.getElementById('detail')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// ---------- Firebase: 댓글 / 별점 (학교별) ----------
+function connectCommentRoom(){
+  if (window._fbCurrentUnsub) { window._fbCurrentUnsub(); window._fbCurrentUnsub = null; }
+  if (!window._fbDb || !selectedDay || !schoolKey()) return;
+
+  const roomPath = `comments/${schoolKey()}/${ymdStr(viewYear,viewMonth,selectedDay)}_${MEALCODE[selectedMeal]}`;
+  window._currentRoomPath = roomPath;
+  const listEl = document.getElementById('commentList');
+  if (listEl) listEl.innerHTML = '<div class="no-comments">불러오는 중...</div>';
+
+  const commentsRef = window._fbRef(window._fbDb, roomPath);
+  window._fbCurrentUnsub = window._fbOnValue(commentsRef, snap => {
+    const data = snap.val();
+    const el = document.getElementById('commentList');
+    if (!el) return;
+    if (!data) { el.innerHTML = '<div class="no-comments">아직 한줄평이 없어요.<br>첫 댓글을 남겨보세요! 🩷</div>'; return; }
+    const arr = Object.values(data).sort((a,b) => a.ts - b.ts);
+    el.innerHTML = arr.map(c => `
+      <div class="comment-item">
+        <div class="comment-meta"><span>👤 ${escapeHtml(c.nick)}</span><span>${c.time || ''}</span></div>
+        <div>${escapeHtml(c.text)}</div>
+      </div>`).join('');
+    el.scrollTop = el.scrollHeight;
+  });
+}
+
+function connectStars(){
+  if (window._fbStarUnsub) { window._fbStarUnsub(); window._fbStarUnsub = null; }
+  if (!window._fbDb || !schoolKey()) return;
+  const starRef = window._fbRef(window._fbDb, `stars/${schoolKey()}`);
+  window._fbStarUnsub = window._fbOnValue(starRef, snap => {
+    globalStars = snap.val() || {};
+    if (selectedDay) renderDetail();
+  });
+}
+
+function connectMealTimes(){
+  if (window._fbTimeUnsub) { window._fbTimeUnsub(); window._fbTimeUnsub = null; }
+  if (!window._fbDb || !schoolKey()) return;
+  const timeRef = window._fbRef(window._fbDb, `mealtimes/${schoolKey()}`);
+  window._fbTimeUnsub = window._fbOnValue(timeRef, snap => {
+    mealTimes = { ...DEFAULT_TIMES, ...(snap.val() || {}) };
+  });
+}
+
+function jsAddComment(){
+  const input = document.getElementById('commentInput');
+  if (!input) return;
+  const txt = input.value.trim();
+  if (!txt || !window._fbDb || !window._currentRoomPath) return;
+  const now = new Date();
+  const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  window._fbPush(window._fbRef(window._fbDb, window._currentRoomPath), {
+    nick: myNick, text: txt, time: timeStr, ts: now.getTime()
+  });
+  input.value = '';
+}
+
+function changeNick(){
+  const n = prompt('새 별명을 입력해 주세요', myNick);
+  if (n && n.trim()) {
+    myNick = n.trim().slice(0, 20);
+    localStorage.setItem(LS.nick, myNick);
+    renderMain();
+  }
+}
+
+// ---------- 학교 선택 모달 ----------
+function openSchoolModal(){
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h2>🏫 학교 검색</h2>
+        <p class="hint">학교 이름을 입력하면 전국에서 찾아드려요.</p>
+        <input type="text" id="schoolSearchInput" placeholder="예: 풍산고등학교" onkeydown="if(event.key==='Enter')doSearchSchool()">
+        <div class="row-btns">
+          <button class="btn-primary" onclick="doSearchSchool()">검색</button>
+          <button class="btn-ghost" onclick="closeModal()">닫기</button>
+        </div>
+        <div class="search-result" id="schoolSearchResult"></div>
+      </div>
+    </div>`;
+  setTimeout(() => { const i = document.getElementById('schoolSearchInput'); if (i) i.focus(); }, 50);
+}
+
+async function doSearchSchool(){
+  const q = document.getElementById('schoolSearchInput').value.trim();
+  const box = document.getElementById('schoolSearchResult');
+  if (!q) return;
+  box.innerHTML = `<div class="loading">검색 중... 🔍</div>`;
+  try {
+    const list = await searchSchools(q);
+    if (!list.length) { box.innerHTML = `<div class="loading">결과가 없어요. 이름을 다시 확인해 주세요.</div>`; return; }
+    box.innerHTML = list.slice(0, 30).map(s => {
+      const obj = { office: s.ATPT_OFCDC_SC_CODE, code: s.SD_SCHUL_CODE, name: s.SCHUL_NM, kind: s.SCHUL_KND_SC_NM || '', addr: s.ORG_RDNMA || '' };
+      const enc = encodeURIComponent(JSON.stringify(obj));
+      return `<div class="school-item" onclick="pickSchool('${enc}')">
+        <div class="nm">${escapeHtml(s.SCHUL_NM)}</div>
+        <div class="meta">${escapeHtml((s.LCTN_SC_NM||'') + ' · ' + (s.SCHUL_KND_SC_NM||'') )}${s.ORG_RDNMA ? ' · ' + escapeHtml(s.ORG_RDNMA) : ''}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    box.innerHTML = `<div class="loading" style="color:#d04080;">검색 실패 😢 인증키/프록시를 확인해 주세요.<br>(${escapeHtml(e.message)})</div>`;
+  }
+}
+
+function pickSchool(enc){
+  school = JSON.parse(decodeURIComponent(enc));
+  setSchool(school);
+  favorites = {};
+  try { favorites = JSON.parse(localStorage.getItem(favLSKey()) || '{}'); } catch(e){}
+  globalStars = {};
+  selectedDay = null;
+  closeModal();
+  connectStars();
+  connectMealTimes();
+  loadMeals();
+}
+
+// ---------- 급식시간 수정 모달 ----------
+function openTimeEditor(){
+  if (!schoolKey()) return;
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h2>⏰ 급식시간</h2>
+        <p class="hint"><b>${escapeHtml(school.name)}</b>의 급식시간이에요. 저장하면 이 학교를 보는 모든 친구에게 공유돼요.</p>
+        <div class="time-edit-row">🌅 조식 <input type="time" id="timeB" value="${mealTimes.b}"></div>
+        <div class="time-edit-row">🍱 중식 <input type="time" id="timeL" value="${mealTimes.l}"></div>
+        <div class="time-edit-row">🌙 석식 <input type="time" id="timeD" value="${mealTimes.d}"></div>
+        <div class="row-btns">
+          <button class="btn-primary" onclick="saveTimes()">저장</button>
+          <button class="btn-ghost" onclick="closeModal()">닫기</button>
+        </div>
+      </div>
+    </div>`;
+}
+function saveTimes(){
+  const t = { b: document.getElementById('timeB').value || DEFAULT_TIMES.b,
+              l: document.getElementById('timeL').value || DEFAULT_TIMES.l,
+              d: document.getElementById('timeD').value || DEFAULT_TIMES.d };
+  mealTimes = t;
+  if (window._fbDb && window._fbSet && schoolKey()) {
+    window._fbSet(window._fbRef(window._fbDb, `mealtimes/${schoolKey()}`), t);
+  }
+  closeModal();
+}
+
+// ---------- 스킨 & 테마 색상 ----------
+const SKIN_PRESETS = {
+  cute: [
+    { name:'🌸 핑크', primary:'#c01858', accent:'#f060a0', light:'#f8c0d8', bg:'#f9e0ec', card:'#fff8fb', text:'#3a1a28' },
+    { name:'🌊 블루', primary:'#1858c0', accent:'#4090f0', light:'#b0d0f8', bg:'#e0ecf9', card:'#f8fbff', text:'#1a283a' },
+    { name:'🌿 그린', primary:'#186040', accent:'#40a060', light:'#b0d8c0', bg:'#e0f2e8', card:'#f8fff8', text:'#1a2a1a' },
+    { name:'🍊 오렌지', primary:'#b04010', accent:'#e06030', light:'#f8c8a0', bg:'#fdf0e0', card:'#fffbf8', text:'#2a1a10' },
+    { name:'🌙 다크', primary:'#e0a0c0', accent:'#f060a0', light:'#503050', bg:'#1a1020', card:'#2a1828', text:'#f0d8e8' },
+  ],
+  cool: [
+    { name:'그레이', primary:'#3b4a5a', accent:'#7fb1d9', light:'#dfe4ea', bg:'#f5f7f9', card:'#ffffff', text:'#2d333b' },
+    { name:'스카이', primary:'#2f5d86', accent:'#5aa6e0', light:'#cfe1f0', bg:'#eef5fb', card:'#ffffff', text:'#22323f' },
+    { name:'민트', primary:'#2f6b60', accent:'#4fc0ad', light:'#cfe8e2', bg:'#eef7f5', card:'#ffffff', text:'#22332f' },
+    { name:'토마토', primary:'#e0301e', accent:'#67c266', light:'#fbf7c8', bg:'#fbeeee', card:'#ffffff', text:'#26303f' },
+    { name:'차콜', primary:'#cdd4dc', accent:'#7fb1d9', light:'#39424d', bg:'#1b1f24', card:'#252a31', text:'#e4e8ed' },
+  ],
+};
+const SKIN_DEFAULT = { cute: SKIN_PRESETS.cute[0], cool: SKIN_PRESETS.cool[0] };
+
+function currentSkin(){ return localStorage.getItem('meal_skin') || 'cute'; }
+function themeStoreKey(skin){ return 'meal_theme_' + skin; }
+function getSkinTheme(skin){
+  try { const o = JSON.parse(localStorage.getItem(themeStoreKey(skin)) || 'null'); if (o) return o; } catch(e){}
+  if (skin === 'cute'){ try { const old = JSON.parse(localStorage.getItem('meal_theme') || 'null'); if (old) return old; } catch(e){} }
+  return SKIN_DEFAULT[skin];
+}
+
+function applyTheme(t) {
+  const r = document.documentElement.style;
+  r.setProperty('--c-primary', t.primary);
+  r.setProperty('--c-accent',  t.accent);
+  r.setProperty('--c-light',   t.light);
+  r.setProperty('--c-bg',      t.bg);
+  r.setProperty('--c-card',    t.card);
+  r.setProperty('--c-text',    t.text);
+}
+function applySkin(skin){
+  document.body.classList.toggle('skin-cool', skin === 'cool');
+  document.body.classList.toggle('skin-cute', skin === 'cute');
+  applyTheme(getSkinTheme(skin));
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', getSkinTheme(skin).accent);
+}
+function loadSkin(){ applySkin(currentSkin()); }function setSkin(skin){
+  localStorage.setItem('meal_skin', skin);
+  applySkin(skin);
+  closeModal(); openSettings();
+}
+function saveTheme(t) {
+  localStorage.setItem(themeStoreKey(currentSkin()), JSON.stringify(t));
+  applyTheme(t);
+}
+loadSkin();
+
+// ---------- 설정 모달 (스킨 + 테마 + 건의사항) ----------
+function skinToggleHTML(){
+  const skin = currentSkin();
+  const btn = (id, label) => `<button onclick="setSkin('${id}')" style="
+    flex:1; padding:10px; border-radius:12px; font-size:17px; font-weight:700; cursor:pointer; font-family:inherit;
+    border:2px solid ${skin===id?'var(--c-accent)':'var(--c-light)'};
+    background:${skin===id?'var(--c-bg)':'var(--c-card)'}; color:${skin===id?'var(--c-primary)':'#9aa3ad'};">${label}</button>`;
+  return `<div style="display:flex;gap:8px;margin-bottom:16px;">${btn('cute','kawaii')}${btn('cool','standard')}</div>`;
+}
+// ---------- 글씨체 & 글씨 크기 (스킨과 분리, 전역) ----------
+const FONTS = {
+  dongle:  { label: '동글',     stack: "'Dongle', sans-serif",           factor: 1.00, gap: '0' },
+  ibm:     { label: 'IBM Plex', stack: "'IBM Plex Sans KR', sans-serif", factor: 0.90, gap: '0.012em' },
+  gowun:   { label: '고운돋움', stack: "'Gowun Dodum', sans-serif",      factor: 0.92, gap: '0.015em' },
+  system:  { label: '기본',     stack: "'Pretendard', system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif", factor: 0.94, gap: '0.015em' },
+  hanam:     { label: '하남다움', stack: "'Hanam Daum', sans-serif", factor: 0.94, gap: '0.01em' },
+  santokki:  { label: '산토끼', stack: "'HS Santokki', sans-serif", factor: 0.96, gap: '0.01em' },
+  mapo:      { label: '마포배낭', stack: "'Mapo Backpacking', sans-serif", factor: 0.94, gap: '0.01em' },
+  pretendard:{ label: '프리텐다드', stack: "'Pretendard EL', sans-serif", factor: 0.94, gap: '0.012em' },
+  goyang:    { label: '고양일산', stack: "'Goyang Ilsan', sans-serif", factor: 0.94, gap: '0.012em' },
+  gwangyang: { label: '광양햇살', stack: "'Gwangyang Haetsal', sans-serif", factor: 0.94, gap: '0.01em' },
+  donggrami: { label: '동그라미', stack: "'Donggrami', sans-serif", factor: 0.94, gap: '0.005em' },
+  midyakda:  { label: '미드야크다', stack: "'Midyakda', sans-serif", factor: 0.94, gap: '0.01em' },
+  yuna:      { label: '전남유나', stack: "'Jeonnam Yuna', sans-serif", factor: 0.94, gap: '0.01em' },
+  chungbuk:  { label: '충북대70', stack: "'Chungbuk 70', sans-serif", factor: 0.92, gap: '0.012em' },
+  taebaek:   { label: '태백은하수', stack: "'Taebaek Eunhasu', sans-serif", factor: 0.94, gap: '0.01em' },
+};
+const SIZES = { s: { label: '작게', scale: 0.92 }, m: { label: '보통', scale: 1.0 }, l: { label: '크게', scale: 1.12 } };
+
+function currentFont(){ return localStorage.getItem('meal_font') || 'dongle'; }
+function currentTextSize(){ return localStorage.getItem('meal_textsize') || 'm'; }
+function applyAppearance(){
+  const f = FONTS[currentFont()] || FONTS.dongle;
+  const s = SIZES[currentTextSize()] || SIZES.m;
+  const r = document.documentElement.style;
+  r.setProperty('--app-font', f.stack);
+  r.setProperty('--app-gap', f.gap || '0');
+  r.setProperty('--fs', (f.factor * s.scale).toFixed(3));
+}
+function setFont(k){ localStorage.setItem('meal_font', k); applyAppearance(); closeModal(); openSettings(); }
+function setTextSize(k){ localStorage.setItem('meal_textsize', k); applyAppearance(); closeModal(); openSettings(); }
+applyAppearance();
+
+function fontPickerHTML(){
+  const cur = currentFont();
+  const btns = Object.keys(FONTS).map(k => {
+    const on = cur === k;
+    return `<button onclick="setFont('${k}')" style="
+      padding:8px 6px; border-radius:11px; font-size:16px; cursor:pointer; font-family:${FONTS[k].stack};
+      border:2px solid ${on?'var(--c-accent)':'var(--c-light)'};
+      background:${on?'var(--c-bg)':'var(--c-card)'}; color:${on?'var(--c-primary)':'var(--c-text)'}; font-weight:${on?700:400};">${FONTS[k].label}</button>`;
+  }).join('');
+  return `<label style="display:block;font-size:17px;font-weight:700;color:var(--c-primary);margin:0 0 8px;">🔤 글씨체</label>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:16px;">${btns}</div>`;
+}
+function sizePickerHTML(){
+  const cur = currentTextSize();
+  const btns = Object.keys(SIZES).map(k => {
+    const on = cur === k;
+    return `<button onclick="setTextSize('${k}')" style="
+      flex:1; padding:8px 4px; border-radius:11px; font-size:15px; cursor:pointer; font-family:inherit;
+      border:2px solid ${on?'var(--c-accent)':'var(--c-light)'};
+      background:${on?'var(--c-bg)':'var(--c-card)'}; color:${on?'var(--c-primary)':'#9aa3ad'}; font-weight:${on?700:400};">${SIZES[k].label}</button>`;
+  }).join('');
+  return `<label style="display:block;font-size:17px;font-weight:700;color:var(--c-primary);margin:0 0 8px;">🔡 글씨 크기</label>
+    <div style="display:flex;gap:6px;margin-bottom:16px;">${btns}</div>`;
+}
+function coolFontToggleHTML(){ return ''; }
+function presetButtonsHTML(){
+  const skin = currentSkin();
+  const saved = getSkinTheme(skin);
+  return SKIN_PRESETS[skin].map(p => {
+    const active = saved && saved.primary === p.primary;
+    return `<button onclick='saveTheme(${JSON.stringify(p)});renderSettingsPresets()' style="
+      padding:7px 12px; border-radius:12px; font-size:16px; font-family:inherit; cursor:pointer;
+      border:2px solid ${active ? p.accent : p.light};
+      background:${p.bg}; color:${p.primary}; font-weight:${active?700:400};">${p.name}</button>`;
+  }).join('');
+}
+function openSettings() {
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h2>⚙ 설정</h2>
+
+        <label style="display:block;font-size:17px;font-weight:700;color:var(--c-primary);margin:0 0 8px;">✨ 스킨</label>
+        ${skinToggleHTML()}
+
+        ${fontPickerHTML()}
+        ${sizePickerHTML()}
+
+        <label style="display:block;font-size:17px;font-weight:700;color:var(--c-primary);margin:0 0 8px;">🎨 테마 색상</label>
+        <div id="themePresets" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">${presetButtonsHTML()}</div>
+
+        <label style="display:block;font-size:17px;font-weight:700;color:var(--c-primary);margin:0 0 4px;">직접 조절</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;">
+          ${[
+            ['--c-primary','주 색상'],['--c-accent','포인트'],
+            ['--c-light','테두리/연한색'],['--c-bg','배경'],
+            ['--c-card','카드 배경'],['--c-text','글자색'],
+          ].map(([v,l]) => {
+            const cur = getComputedStyle(document.documentElement).getPropertyValue(v).trim() || '#888888';
+            return `<div style="display:flex;align-items:center;gap:6px;font-size:16px;color:var(--c-text);">
+              <input type="color" value="${cur}" oninput="document.documentElement.style.setProperty('${v}',this.value)"
+                onchange="saveCustomTheme()" style="width:32px;height:32px;border:none;cursor:pointer;background:none;">
+              ${l}
+            </div>`;
+          }).join('')}
+        </div>
+        <button class="btn-ghost" style="margin-bottom:18px;font-size:16px;" onclick="resetTheme()">↩ 이 스킨 기본 색으로</button>
+
+        <label style="display:block;font-size:17px;font-weight:700;color:var(--c-primary);margin:0 0 4px;">📮 건의사항</label>
+        <p class="hint" style="margin-bottom:8px;">개선할 점이나 원하는 기능을 알려주세요!</p>
+        <textarea id="feedbackText" placeholder="여기에 자유롭게 써주세요 🩷" maxlength="500"
+          style="width:100%;border:2px solid var(--c-light);border-radius:12px;padding:10px;font-size:17px;font-family:inherit;
+                 color:var(--c-text);background:var(--c-card);outline:none;resize:vertical;min-height:90px;"></textarea>
+        <div style="font-size:14px;color:#9aa3ad;text-align:right;margin:3px 0 10px;" id="feedbackCount">0 / 500</div>
+        <div class="row-btns">
+          <button class="btn-primary" onclick="submitFeedback()">전송 📮</button>
+          <button class="btn-ghost" onclick="closeModal()">닫기</button>
+        </div>
+        <div id="feedbackMsg" style="text-align:center;font-size:17px;margin-top:10px;min-height:22px;"></div>
+      </div>
+    </div>`;
+
+  document.getElementById('feedbackText').addEventListener('input', function(){
+    document.getElementById('feedbackCount').textContent = this.value.length + ' / 500';
+  });
+}
+
+function renderSettingsPresets() {
+  const box = document.getElementById('themePresets');
+  if (box) box.innerHTML = presetButtonsHTML();
+}
+
+function saveCustomTheme() {
+  const t = {};
+  ['--c-primary','--c-accent','--c-light','--c-bg','--c-card','--c-text'].forEach(v => {
+    t[v.replace('--c-','')] = getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  });
+  localStorage.setItem(themeStoreKey(currentSkin()), JSON.stringify(t));
+}
+
+function resetTheme() {
+  const skin = currentSkin();
+  localStorage.removeItem(themeStoreKey(skin));
+  if (skin === 'cute') localStorage.removeItem('meal_theme');
+  applyTheme(SKIN_DEFAULT[skin]);
+  closeModal();
+  openSettings();
+}
+async function submitFeedback() {
+  const txt = document.getElementById('feedbackText').value.trim();
+  const msgEl = document.getElementById('feedbackMsg');
+  if (!txt) { msgEl.textContent = '내용을 입력해 주세요 🥲'; return; }
+  if (!window._fbDb) { msgEl.textContent = 'Firebase 연결 중이에요, 잠깐만요...'; return; }
+  try {
+    await window._fbPush(window._fbRef(window._fbDb, 'feedback'), {
+      text: txt,
+      school: school ? school.name : '(미선택)',
+      ts: Date.now(),
+      ua: navigator.userAgent.slice(0, 80),
+    });
+    msgEl.style.color = 'var(--c-primary)';
+    msgEl.textContent = '전송됐어요! 고마워요 🩷';
+    document.getElementById('feedbackText').value = '';
+    document.getElementById('feedbackCount').textContent = '0 / 500';
+  } catch(e) {
+    msgEl.style.color = '#d04080';
+    msgEl.textContent = '전송 실패 😢 (' + e.message + ')';
+  }
+}
+
+// ---------- 도움말 (사용 설명서) ----------
+function openHelp() {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const installGuide = isIOS
+    ? '사파리 아래쪽 <b>공유 버튼</b> → <b>"홈 화면에 추가"</b>'
+    : '브라우저 메뉴(⋮) → <b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>';
+
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h2>사용 설명서 🍱</h2>
+
+        <div class="help-banner">
+          <div class="big">📲</div>
+          <div class="txt">앱처럼 쓰고 싶다면?
+            <small>${installGuide} 누르면 홈 화면에 깔려요!</small>
+          </div>
+        </div>
+
+        <div class="help-step"><div class="n">1</div><div class="body"><b>학교 선택</b> — 맨 위 🏫 버튼으로 우리 학교를 검색해서 골라요.</div></div>
+        <div class="help-step"><div class="n">2</div><div class="body"><b>날짜를 눌러요</b> — 달력에서 날짜를 누르면 그날의 조식·중식·석식 메뉴가 떠요.</div></div>
+        <div class="help-step"><div class="n">3</div><div class="body"><b>맛있는 메뉴에 별 ★</b> — 메뉴를 누르면 별표가 돼요. 같은 학교 친구들이 누른 별이 <b>합산</b>돼서, 1등 메뉴엔 👑 왕관이 붙어요!</div></div>
+        <div class="help-step"><div class="n">4</div><div class="body"><b>한줄평 공유</b> — 같은 학교 친구들끼리 댓글을 나눠요. 날짜·끼니(조/중/석)마다 따로 달리고, <b>별명</b>도 바꿀 수 있어요.</div></div>
+
+        <hr class="help-divider">
+
+        <div class="help-step"><div class="n">📝</div><div class="body"><b>나만의 메모</b> — 달력 날짜 옆 <b>＋</b>를 누르면 그날의 메모 페이지가 열려요. 제목을 적으면 달력에 <b>제목이 떠요</b>. To-do와 메모, <b>타임테이블 형광펜</b>(여러 색으로 칠하고 메모 달기)까지 쓸 수 있어요. 이 메모는 <b>나만 보는</b> 개인 기록이에요(친구들과 공유 안 됨).<br><button class="ex-btn" onclick="openMemoExample()">👀 예시 보기</button></div></div>
+
+        <div class="help-step"><div class="n">⏰</div><div class="body"><b>급식시간</b> — 중식·석식 먹는 시간은 <b>누구나 수정</b>할 수 있고 같은 학교 친구들에게 공유돼요. 다음 급식까지 카운트다운도 떠요.</div></div>
+        <div class="help-step"><div class="n">🎨</div><div class="body"><b>색상 바꾸기</b> — ⚙ 설정에서 테마를 고르거나, 색상표 슬라이드로 원하는 색을 직접 만들 수 있어요.</div></div>
+        <div class="help-step"><div class="n">📮</div><div class="body"><b>건의사항</b> — ⚙ 설정 맨 아래에서 제작자에게 의견을 보낼 수 있어요.</div></div>
+
+        <div class="row-btns" style="margin-top:18px;">
+          <button class="btn-primary" onclick="closeModal()">알겠어요! 🩷</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+// 첫 방문 시 자동으로 한 번만 표시
+function maybeShowHelpOnce() {
+  if (!localStorage.getItem('meal_help_seen')) {
+    localStorage.setItem('meal_help_seen', '1');
+    setTimeout(openHelp, 600);
+  }
+}
+
+// ===================== 개인 메모 (날짜별, 기기 저장) =====================
+const HL_COLORS = ['#ffe08a', '#a8d8ff', '#ffb3c8', '#b8f0c0', '#d8b8f0', '#ffc8a0'];
+const TT_COLS = 6;            // 시간당 칸 (10분 단위)
+const TT_CELLS = 24 * TT_COLS;
+
+function normalizeMemo(o){
+  o = o || {};
+  return {
+    title: o.title || '',
+    todos: Array.isArray(o.todos) ? o.todos : [],
+    note: o.note || '',
+    cells: (Array.isArray(o.cells) && o.cells.length === TT_CELLS) ? o.cells : new Array(TT_CELLS).fill(null),
+    groups: o.groups || {}
+  };
+}
+function getMemo(ymd){
+  try { const o = JSON.parse(localStorage.getItem('meal_memo_' + ymd) || 'null'); if (o) return normalizeMemo(o); } catch(e){}
+  return normalizeMemo(null);
+}
+
+let _memoDay = null, _memo = null;
+let _ttColor = HL_COLORS[0], _ttPending = null, _ttSelGroup = null;
+let _ttDragging = false, _ttDragStart = null, _ttDragCur = null, _ttMoved = false;
+
+function persistMemo(){
+  if (_memoDay == null) return;
+  localStorage.setItem('meal_memo_' + ymdStr(viewYear, viewMonth, _memoDay), JSON.stringify(_memo));
+}
+
+// 달력칸의 메모 진입점 (제목 있으면 제목, 없으면 +)
+function calMemoHTML(d){
+  const m = getMemo(ymdStr(viewYear, viewMonth, d));
+  const t = (m.title || '').trim();
+  const inner = t ? `<span class="ttl">${escapeHtml(t)}</span>` : `<span class="plus">＋</span>`;
+  return `<span class="cal-memo" onclick="event.stopPropagation();openMemo(${d})" title="${t ? escapeHtml(t) : '메모 추가'}">${inner}</span>`;
+}
+function updateCalMemo(d){
+  const cell = document.getElementById('day-cell-' + d);
+  if (!cell) return;
+  const span = cell.querySelector('.cal-memo');
+  if (!span) return;
+  const m = getMemo(ymdStr(viewYear, viewMonth, d));
+  const t = (m.title || '').trim();
+  span.innerHTML = t ? `<span class="ttl">${escapeHtml(t)}</span>` : `<span class="plus">＋</span>`;
+}
+
+function openMemo(d){
+  _memoDay = d;
+  _memo = getMemo(ymdStr(viewYear, viewMonth, d));
+  _ttColor = HL_COLORS[0]; _ttPending = null; _ttSelGroup = null;
+  const DOW = ['일','월','화','수','목','금','토'];
+  const firstDow = new Date(viewYear, viewMonth - 1, 1).getDay();
+  const dow = DOW[(firstDow + d - 1) % 7];
+
+  const colorDots = HL_COLORS.map(c =>
+    `<span class="tt-color${c===_ttColor?' sel':''}" style="background:${c}" onclick="setTTColor('${c}')"></span>`
+  ).join('');
+
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeMemo()">
+      <div class="modal modal-wide">
+        <input class="memo-title-input" id="memoTitle" placeholder="${viewMonth}월 ${d}일 (${dow}) — 제목을 입력하세요"
+          value="${escapeHtml(_memo.title)}"
+          oninput="_memo.title=this.value; persistMemo(); updateCalMemo(${d});">
+        <div class="memo-body">
+          <div class="memo-col">
+            <h3>✅ To-do</h3>
+            <div class="todo-add">
+              <input id="todoInput" placeholder="할 일 추가" maxlength="80" onkeydown="if(event.key==='Enter')addTodo()">
+              <button onclick="addTodo()">＋</button>
+            </div>
+            <div id="todoList"></div>
+            <h3 style="margin-top:16px;">📝 메모</h3>
+            <textarea class="memo-note" id="memoNote" placeholder="자유롭게 메모하세요" oninput="_memo.note=this.value; persistMemo();">${escapeHtml(_memo.note)}</textarea>
+          </div>
+          <div class="memo-col">
+            <h3>🖍️ 타임테이블</h3>
+            <div class="tt-tools">
+              ${colorDots}
+              <button class="tt-repeat" onclick="openRepeat()" title="반복 적용">🔁 반복</button>
+              <span class="tt-trash" onclick="clearAllTT()" title="전체 지우기">🗑</span>
+            </div>
+            <div class="tt-grid" id="ttGrid"
+              onpointerdown="ttDownC(event)" onpointermove="ttMoveC(event)" onpointerup="ttUpC(event)" onpointercancel="ttCancel()"></div>
+            <div id="ttPanel"></div>
+            <div class="tt-hint">칸을 <b>시작→끝</b>으로 톡톡 누르거나 <b>드래그</b>하면 형광펜이 칠해져요. 칠한 곳을 누르면 메모를 달 수 있어요.</div>
+          </div>
+        </div>
+        <div class="row-btns" style="margin-top:18px;">
+          <button class="btn-primary" onclick="closeMemo()">완료 🩷</button>
+        </div>
+      </div>
+    </div>`;
+
+  renderTodos();
+  renderTT();
+}
+
+function closeMemo(){
+  persistMemo();
+  if (_memoDay != null) updateCalMemo(_memoDay);
+  _memoDay = null; _memo = null;
+  closeModal();
+}
+
+// ----- To-do -----
+function renderTodos(){
+  const el = document.getElementById('todoList');
+  if (!el) return;
+  if (!_memo.todos.length) { el.innerHTML = `<div style="color:#d8a8c0;font-size:15px;padding:4px 2px;">할 일이 없어요</div>`; return; }
+  el.innerHTML = _memo.todos.map((t, i) => `
+    <div class="todo-item ${t.done ? 'done' : ''}">
+      <span class="todo-check" onclick="toggleTodo(${i})">${t.done ? '✓' : ''}</span>
+      <span class="todo-text">${escapeHtml(t.t)}</span>
+      <span class="todo-del" onclick="delTodo(${i})">✕</span>
+    </div>`).join('');
+}
+function addTodo(){
+  const inp = document.getElementById('todoInput');
+  const v = inp.value.trim();
+  if (!v) return;
+  _memo.todos.push({ t: v, done: false });
+  inp.value = '';
+  persistMemo(); renderTodos();
+}
+function toggleTodo(i){ _memo.todos[i].done = !_memo.todos[i].done; persistMemo(); renderTodos(); }
+function delTodo(i){ _memo.todos.splice(i, 1); persistMemo(); renderTodos(); }
+
+// ----- 타임테이블 형광펜 -----
+function setTTColor(c){
+  _ttColor = c;
+  document.querySelectorAll('.tt-color').forEach(el => el.classList.toggle('sel', el.style.background.includes(c) ));
+  // 정확히 다시 칠하기
+  const dots = document.querySelectorAll('.tt-color');
+  dots.forEach((el, idx) => el.classList.toggle('sel', HL_COLORS[idx] === c));
+}
+function renderTT(){
+  const grid = document.getElementById('ttGrid');
+  if (!grid) return;
+  // 형광펜 그룹별 칸 모으기
+  const groupCells = {};
+  for (let i = 0; i < TT_CELLS; i++){ const c = _memo.cells[i]; if (c){ (groupCells[c.g] = groupCells[c.g] || []).push(i); } }
+  const TT_START = 4; // 04시부터 표시 시작
+  let html = '';
+  for (let dh = 0; dh < 24; dh++){
+    const h = (dh + TT_START) % 24;
+    let cells = '';
+    for (let col = 0; col < TT_COLS; col++){
+      const i = h * TT_COLS + col;
+      const c = _memo.cells[i];
+      const bg = c ? `background:${c.c};` : '';
+      const pend = (_ttPending === i) ? ' pending' : '';
+      cells += `<div class="tt-cell${pend}" style="${bg}" data-i="${i}"></div>`;
+    }
+    html += `<div class="tt-row"><div class="tt-hour">${pad(h)}</div><div class="tt-cells">${cells}</div></div>`;
+  }
+  // 메모는 그리드 전체에 겹치는 오버레이로: 그룹 시작 칸에서 시작해 형광펜을 따라 흐름(첫 줄만 들여쓰기)
+  const ROW_H = 21; // 칸 높이 20 + 경계선 1
+  let labels = '';
+  for (const g in groupCells){
+    const gg = _memo.groups[g];
+    if (!gg || !gg.memo) continue;
+    const start = groupCells[g][0];
+    const h0 = Math.floor(start / TT_COLS), col0 = start % TT_COLS;
+    const dispRow = (h0 - TT_START + 24) % 24;   // 04시 시작 기준 표시 줄
+    const top = dispRow * ROW_H;
+    const indent = (col0 / TT_COLS * 100);
+    labels += `<div class="tt-memo-label" style="top:${top}px;text-indent:${indent}%;">${escapeHtml(gg.memo)}</div>`;
+  }
+  html += `<div class="tt-labels">${labels}</div>`;
+  grid.innerHTML = html;
+  renderTTPanel();
+}
+function renderTTPanel(){
+  const p = document.getElementById('ttPanel');
+  if (!p) return;
+  if (!_ttSelGroup || !_memo.groups[_ttSelGroup]){ p.innerHTML = ''; return; }
+  const g = _memo.groups[_ttSelGroup];
+  p.innerHTML = `<div class="tt-edit">
+    <input id="ttMemoInput" placeholder="이 형광펜에 메모" value="${escapeHtml(g.memo || '')}"
+      oninput="_memo.groups['${_ttSelGroup}'].memo=this.value; persistMemo();"
+      onkeydown="if(event.key==='Enter'){renderTT();}">
+    <button class="tt-edit-del" onclick="deleteGroup('${_ttSelGroup}')">🗑 삭제</button>
+    <button class="tt-edit-ok" onclick="_ttSelGroup=null; renderTT();">확인</button>
+  </div>`;
+  const mi = document.getElementById('ttMemoInput'); if (mi) mi.focus();
+}
+
+function cellIdxFromEvent(e){
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  if (el && el.classList.contains('tt-cell')) return parseInt(el.dataset.i, 10);
+  if (el && el.classList.contains('tt-memo-label')) return parseInt(el.parentElement.dataset.i, 10);
+  return null;
+}
+function ttDownC(e){
+  const i = cellIdxFromEvent(e);
+  if (i == null) return;
+  e.preventDefault();
+  try { e.currentTarget.setPointerCapture(e.pointerId); } catch(_){}
+  _ttDragging = true; _ttDragStart = i; _ttDragCur = i; _ttMoved = false;
+}
+function ttMoveC(e){
+  if (!_ttDragging) return;
+  const i = cellIdxFromEvent(e);
+  if (i == null || i === _ttDragCur) return;
+  _ttDragCur = i;
+  if (i !== _ttDragStart) _ttMoved = true;
+  previewRange();
+}
+function ttUpC(e){
+  if (!_ttDragging) return;
+  _ttDragging = false;
+  if (_ttMoved){ commitRange(_ttDragStart, _ttDragCur); _ttPending = null; _ttSelGroup = null; }
+  else { handleTap(_ttDragStart); }
+  renderTT();
+}
+function ttCancel(){ _ttDragging = false; previewClear(); }
+
+function handleTap(i){
+  if (_ttPending != null){ commitRange(_ttPending, i); _ttPending = null; _ttSelGroup = null; }
+  else if (_memo.cells[i]){ _ttSelGroup = _memo.cells[i].g; }
+  else { _ttPending = i; _ttSelGroup = null; }
+}
+function previewRange(){
+  const lo = Math.min(_ttDragStart, _ttDragCur), hi = Math.max(_ttDragStart, _ttDragCur);
+  document.querySelectorAll('.tt-cell').forEach(el => {
+    const i = parseInt(el.dataset.i, 10);
+    el.classList.toggle('preview', i >= lo && i <= hi);
+  });
+}
+function previewClear(){ document.querySelectorAll('.tt-cell.preview').forEach(el => el.classList.remove('preview')); }
+
+function commitRange(a, b){
+  const lo = Math.min(a, b), hi = Math.max(a, b);
+  const gid = 'g' + Date.now() + Math.floor(Math.random() * 1000);
+  for (let i = lo; i <= hi; i++) _memo.cells[i] = { c: _ttColor, g: gid };
+  _memo.groups[gid] = { color: _ttColor, memo: '' };
+  cleanupGroups();
+  persistMemo();
+}
+function cleanupGroups(){
+  const used = {};
+  _memo.cells.forEach(c => { if (c) used[c.g] = true; });
+  Object.keys(_memo.groups).forEach(g => { if (!used[g]) delete _memo.groups[g]; });
+}
+function deleteGroup(gid){
+  for (let i = 0; i < TT_CELLS; i++){ if (_memo.cells[i] && _memo.cells[i].g === gid) _memo.cells[i] = null; }
+  delete _memo.groups[gid];
+  _ttSelGroup = null;
+  persistMemo(); renderTT();
+}
+function clearAllTT(){
+  if (!_memo.cells.some(c => c)) return;
+  if (!confirm('타임테이블 형광펜을 모두 지울까요?')) return;
+  _memo.cells = new Array(TT_CELLS).fill(null);
+  _memo.groups = {};
+  _ttPending = null; _ttSelGroup = null;
+  persistMemo(); renderTT();
+}
+
+function openMemoExample(){
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)openHelp()">
+      <div class="modal" style="max-width:340px;text-align:center;">
+        <h2 style="margin-bottom:4px;">예시 👀</h2>
+        <p class="hint" style="margin-bottom:16px;">메모 제목과 메뉴 별점이 달력칸에<br>이렇게 표시돼요.</p>
+        <div class="example-day">
+          <div class="day-top"><span class="day-num" style="color:#d0204a;">21</span><span class="cal-memo"><span class="ttl">엄마랑 외출♡</span></span></div>
+          <div class="day-stars-summary">
+            <div class="summary-line has-stars">♨ 4<span class="cal-fav-name">소고기장조림</span></div>
+            <div class="summary-line has-stars">´▽\`♡ 3<span class="cal-fav-name">돼지고기두루치기</span></div>
+            <div class="summary-line has-stars">♬ 1<span class="cal-fav-name">뿌링클치킨</span></div>
+          </div>
+        </div>
+        <div class="row-btns" style="margin-top:20px;">
+          <button class="btn-primary" onclick="openHelp()">← 설명서로</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ----- 타임테이블 반복 적용 -----
+function openMemoBack(){ if (_memoDay != null) openMemo(_memoDay); else closeModal(); }
+
+function openRepeat(){
+  if (!_memo || !_memo.cells.some(c => c)) { alert('먼저 타임테이블에 형광펜을 칠해주세요! 🖍️'); return; }
+  const DOW = ['일','월','화','수','목','금','토'];
+  const src = new Date(viewYear, viewMonth - 1, _memoDay);
+  const wd = DOW[src.getDay()];
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)openMemoBack()">
+      <div class="modal" style="max-width:430px;">
+        <h2>🔁 반복 적용</h2>
+        <p class="hint">지금 타임테이블(형광펜 + 메모)을 다른 날에도 똑같이 넣어요.<br><b>${viewMonth}월 ${_memoDay}일 (${wd})</b> 기준이에요.</p>
+
+        <label class="rep-label">언제 적용할까요?</label>
+        <div class="rep-opts">
+          <label><input type="radio" name="rep-pat" value="weekly" checked> 매주 ${wd}요일</label>
+          <label><input type="radio" name="rep-pat" value="weekday"> 평일마다 (월~금)</label>
+          <label><input type="radio" name="rep-pat" value="weekend"> 주말마다 (토·일)</label>
+          <label><input type="radio" name="rep-pat" value="daily"> 매일</label>
+        </div>
+
+        <label class="rep-label">기간</label>
+        <div class="rep-weeks">앞으로 <input type="number" id="repWeeks" value="4" min="1" max="52"> 주 동안</div>
+
+        <label class="rep-label">그날 이미 형광펜이 있으면?</label>
+        <div class="rep-opts">
+          <label><input type="radio" name="rep-mode" value="merge" checked> 합치기 (빈 칸만 채워요)</label>
+          <label><input type="radio" name="rep-mode" value="replace"> 덮어쓰기 (그날 걸 지우고 교체)</label>
+        </div>
+
+        <div class="row-btns" style="margin-top:20px;">
+          <button class="btn-primary" onclick="applyRepeat()">적용</button>
+          <button class="btn-ghost" onclick="openMemoBack()">취소</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function applyRepeat(){
+  const pat = (document.querySelector('input[name="rep-pat"]:checked') || {}).value || 'weekly';
+  const mode = (document.querySelector('input[name="rep-mode"]:checked') || {}).value || 'merge';
+  let weeks = parseInt(document.getElementById('repWeeks').value, 10);
+  if (!weeks || weeks < 1) weeks = 1;
+  if (weeks > 52) weeks = 52;
+
+  const src = new Date(viewYear, viewMonth - 1, _memoDay);
+  const srcDow = src.getDay();
+  const srcCells = _memo.cells, srcGroups = _memo.groups;
+  const totalDays = weeks * 7;
+  let count = 0;
+
+  for (let off = 1; off <= totalDays; off++){
+    const dt = new Date(src); dt.setDate(dt.getDate() + off);
+    const dow = dt.getDay();
+    let match = false;
+    if (pat === 'daily') match = true;
+    else if (pat === 'weekly') match = (dow === srcDow);
+    else if (pat === 'weekday') match = (dow >= 1 && dow <= 5);
+    else if (pat === 'weekend') match = (dow === 0 || dow === 6);
+    if (!match) continue;
+
+    const ymd = `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}`;
+    const tgt = getMemo(ymd);
+
+    if (mode === 'replace'){
+      tgt.cells = srcCells.map(c => c ? { c: c.c, g: c.g } : null);
+      tgt.groups = {};
+      for (const g in srcGroups) tgt.groups[g] = { color: srcGroups[g].color, memo: srcGroups[g].memo };
+    } else {
+      for (let i = 0; i < TT_CELLS; i++){
+        if (srcCells[i] && !tgt.cells[i]){
+          tgt.cells[i] = { c: srcCells[i].c, g: srcCells[i].g };
+          const sg = srcGroups[srcCells[i].g];
+          if (sg) tgt.groups[srcCells[i].g] = { color: sg.color, memo: sg.memo };
+        }
+      }
+      const used = {}; tgt.cells.forEach(c => { if (c) used[c.g] = true; });
+      Object.keys(tgt.groups).forEach(g => { if (!used[g]) delete tgt.groups[g]; });
+    }
+    localStorage.setItem('meal_memo_' + ymd, JSON.stringify(tgt));
+    count++;
+  }
+
+  alert(count + '일에 타임테이블을 적용했어요! 🎀');
+  openMemoBack();
+}
+
+// ---------- 헤더 제목 커스텀 (개인 기기) ----------
+const DEFAULT_EMOJI = ' ヾ(≧▽≦*)';
+function applyTitle(){
+  const el = document.getElementById('appTitle');
+  if (el) el.textContent = (localStorage.getItem('meal_title') || '').trim() || '급식 알리미';
+  const em = document.getElementById('appEmoji');
+  if (em) {
+    const saved = localStorage.getItem('meal_emoji');
+    // 저장값 없으면 기본 이모티콘, 빈 문자열('')로 저장했으면 숨김
+    if (saved === null) em.textContent = DEFAULT_EMOJI;
+    else em.textContent = saved ? ' ' + saved : '';
+  }
+}
+function openTitleEdit(){
+  const cur = localStorage.getItem('meal_title') || '';
+  const savedEmoji = localStorage.getItem('meal_emoji');
+  const curEmoji = savedEmoji === null ? DEFAULT_EMOJI.trim() : savedEmoji;
+  document.getElementById('modalMount').innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal" style="max-width:380px;">
+        <h2>제목 바꾸기 ✏️</h2>
+        <p class="hint" style="margin-bottom:10px;">맨 위에 보이는 제목을 바꿔요. 나만 보이고, 비우면 '급식 알리미'로 돌아가요.</p>
+        <input id="titleInput" maxlength="20" placeholder="급식 알리미"
+          onkeydown="if(event.key==='Enter')saveTitle()"
+          style="width:100%;border:2px solid var(--c-light);border-radius:12px;padding:10px 12px;font-size:calc(18px * var(--fs,1));font-family:inherit;color:var(--c-text);background:var(--c-card);outline:none;">
+        <p class="hint" style="margin:14px 0 6px;">제목 옆 이모티콘 (kawaii 스킨에서만 보여요). 비우면 안 보여요.</p>
+        <input id="emojiInput" maxlength="24" placeholder="ヾ(≧▽≦*)"
+          onkeydown="if(event.key==='Enter')saveTitle()"
+          style="width:100%;border:2px solid var(--c-light);border-radius:12px;padding:10px 12px;font-size:calc(18px * var(--fs,1));font-family:inherit;color:var(--c-text);background:var(--c-card);outline:none;">
+        <div class="row-btns" style="margin-top:16px;">
+          <button class="btn-primary" onclick="saveTitle()">저장</button>
+          <button class="btn-ghost" onclick="closeModal()">취소</button>
+        </div>
+      </div>
+    </div>`;
+  setTimeout(() => {
+    const el = document.getElementById('titleInput'); if (el){ el.value = cur; el.focus(); }
+    const em = document.getElementById('emojiInput'); if (em){ em.value = curEmoji; }
+  }, 40);
+}
+function saveTitle(){
+  const v = (document.getElementById('titleInput').value || '').trim();
+  if (v) localStorage.setItem('meal_title', v); else localStorage.removeItem('meal_title');
+  const e = (document.getElementById('emojiInput').value || '').trim();
+  // 입력 그대로 저장 (빈칸이면 '' 저장 → 숨김). 기본값과 같으면 키 제거해서 기본으로.
+  if (e === DEFAULT_EMOJI.trim()) localStorage.removeItem('meal_emoji');
+  else localStorage.setItem('meal_emoji', e);
+  applyTitle();
+  closeModal();
+}
+applyTitle();
+
+function closeModal(){ document.getElementById('modalMount').innerHTML = ''; }
+
+// ---------- 타이머 ----------
+(function(){
+  function getMenuPreview(mealKey){
+    const real = new Date();
+    if (real.getFullYear() !== viewYear || (real.getMonth()+1) !== viewMonth) return '';
+    const data = meals[mealKey] && meals[mealKey][real.getDate()];
+    if (!data || !data.items) return '';
+    return data.items.slice(0, 3).map(i => cleanName(i)).join(' · ');
+  }
+  function tick(){
+    const labelEl = document.getElementById('timerLabel');
+    if (!labelEl) return; // 타이머 미표시 상태
+    const now = new Date();
+    const order = [ ['b','조식','🌅'], ['l','중식','🍱'], ['d','석식','🌙'] ];
+    let target = null, tInfo = null;
+    for (const [code, nm, emo] of order) {
+      const [hh, mm] = (mealTimes[code] || DEFAULT_TIMES[code]).split(':').map(Number);
+      const t = new Date(now); t.setHours(hh, mm, 0, 0);
+      if (t > now) { target = t; tInfo = { code, nm, emo, hh, mm }; break; }
+    }
+    const nameEl = document.getElementById('timerMealName');
+    const previewEl = document.getElementById('timerMenuPreview');
+    const hEl = document.getElementById('timerH'), mEl = document.getElementById('timerM'), sEl = document.getElementById('timerS');
+    if (!target) {
+      labelEl.textContent = '🌙 오늘 급식 끝!';
+      nameEl.textContent = '내일 또 만나요 👋';
+      previewEl.textContent = '';
+      hEl.textContent = '--'; mEl.textContent = '--'; sEl.textContent = '--';
+      return;
+    }
+    const diff = Math.max(0, Math.floor((target - now) / 1000));
+    labelEl.textContent = `⏳ ${tInfo.nm}까지`;
+    nameEl.textContent = `${tInfo.emo} ${pad(tInfo.hh)}:${pad(tInfo.mm)} ${tInfo.nm}`;
+    previewEl.textContent = getMenuPreview(tInfo.nm);
+    hEl.textContent = pad(Math.floor(diff/3600));
+    mEl.textContent = pad(Math.floor((diff%3600)/60));
+    sEl.textContent = pad(diff%60);
+  }
+  setInterval(tick, 1000);
+  window._timerTick = tick;
+})();
+
+// ---------- 초기화 ----------
+function boot(){
+  if (school) {
+    try { favorites = JSON.parse(localStorage.getItem(favLSKey()) || '{}'); } catch(e){}
+    connectStars();
+    connectMealTimes();
+    loadMeals();
+  } else {
+    renderMain();
+  }
+  maybeShowHelpOnce();
+}
+window._pendingInit = boot;
+if (window._firebaseReady) boot();
+</script>
+
+<script>
+// 서비스워커 등록 (PWA - 홈화면 추가/오프라인)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(e => console.log('SW 등록 실패', e));
+  });
+}
+
+// 클릭 별가루 ✨ (그대로 유지)
+(function() {
+  const COLORS = ['#f02060','#ff80b0','#ffcc00','#ff60a0','#fff','#f0a0d0','#ffaacc','#ffe0f0'];
+  const SHAPES = ['★','✦','✧','♥','·','✿','❋'];
+  document.addEventListener('click', function(e) {
+    if (document.body.classList.contains('skin-cool')) return;
+    const count = 14 + Math.floor(Math.random() * 8);
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      el.textContent = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+      const size = 10 + Math.random() * 16, angle = Math.random() * 360, dist = 40 + Math.random() * 80;
+      const dx = Math.cos(angle*Math.PI/180)*dist, dy = Math.sin(angle*Math.PI/180)*dist, dur = 500 + Math.random()*500;
+      Object.assign(el.style, {
+        position:'fixed', left:e.clientX+'px', top:e.clientY+'px', fontSize:size+'px',
+        color:COLORS[Math.floor(Math.random()*COLORS.length)], pointerEvents:'none', zIndex:99999,
+        userSelect:'none', transform:'translate(-50%,-50%)',
+        transition:`transform ${dur}ms ease-out, opacity ${dur}ms ease-out`, opacity:'1',
+        textShadow:'0 0 4px #fff', fontFamily:'serif',
+      });
+      document.body.appendChild(el);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.3) rotate(${angle}deg)`;
+        el.style.opacity = '0';
+      }));
+      setTimeout(() => el.remove(), dur + 50);
+    }
+  });
+})();
+
+// 쿨 스킨 물결 링클 (날짜·메뉴 등 누를 때만)
+(function() {
+  const TARGETS = '.day:not(.empty), .menu-row, .tab, .day-arrow, .month-nav button';
+  document.addEventListener('click', function(e) {
+    if (!document.body.classList.contains('skin-cool')) return;
+    if (!e.target.closest(TARGETS)) return;
+    for (let k = 0; k < 2; k++) {
+      const r = document.createElement('div');
+      r.className = 'cool-ripple';
+      const size = 150;
+      r.style.left = e.clientX + 'px';
+      r.style.top = e.clientY + 'px';
+      r.style.width = size + 'px';
+      r.style.height = size + 'px';
+      r.style.animation = `coolRippleAnim 720ms ease-out ${k * 140}ms forwards`;
+      document.body.appendChild(r);
+      setTimeout(() => r.remove(), 720 + k * 140 + 80);
+    }
+  });
+})();
+
+// ===== 오늘의 운세 (포춘쿠키) =====
+const FORTUNES = [
+  {c:'오늘의 한마디', m:'오늘 웃을 일이 꼭 하나는 생겨요 🌸'},
+  {c:'오늘의 한마디', m:'다정함을 미루지 말자.'},
+  {c:'오늘의 한마디', m:'상대보다 실력이 부족하면 광기로 버텨야만 이길 수 있소.'},
+  {c:'오늘의 한마디', m:'이제 곧 행운이 너를 찾아갈 거야'},
+  {c:'오늘의 한마디', m:'좌절금지'},
+  {c:'오늘의 한마디', m:'노력은 가끔 배신하지요!! 운이 최고!! 화이팅하세요!!'},
+  {c:'오늘의 한마디', m:'피할수없다면즐..즐입니다'},
+  {c:'오늘의 한마디', m:'되는 놈은 됩니다'},
+  {c:'오늘의 한마디', m:'인생은 직진'},
+  {c:'오늘의 한마디', m:'좋은 일이 일어날 것 같은 예감이 팍팍 듭니다.'},
+  {c:'오늘의 한마디', m:'🦖 너도 멸종하지 않게 조심해 💬'},
+  {c:'오늘의 한마디', m:'기쁜 일은 예상치 못한 곳에서, 갑자기! 그게 바로 오늘이군요!'},
+  {c:'오늘의 한마디', m:'당신의 걱정이 무엇이던 제가 다 훔쳐갈게요!'},
+  {c:'오늘의 한마디', m:'어제보다 아주 조금씩만 더 잘하면 되는거야.'},
+  {c:'오늘의 한마디', m:'순간순간 사랑하고 순간순간 행복하세요'},
+  {c:'오늘의 한마디', m:'넌 미쳤어. 이건 비밀인데... 멋진 사람들은 다 미쳤단다.'},
+  {c:'오늘의 한마디', m:'떡볶이를 먹으면 좋은 일이 생길겁니다'},
+  {c:'오늘의 한마디', m:'포:기하지마! 옹:졸해보여 (포옹...)'},
+  {c:'오늘의 한마디', m:'고민이 길어질 땐 몸을 움직이자'},
+  {c:'오늘의 한마디', m:'오늘은 평화로운 하루~♬'},
+  {c:'오늘의 한마디', m:'모든 말에서 의미를 찾으려 애쓰지 말 것.'},
+  {c:'오늘의 한마디', m:'이 글을 발견했군요! 오늘은 행복 가득 행운 가득한 날'},
+  {c:'오늘의 한마디', m:'불안을 설렘으로 바꿔 보아요 ^_^'},
+  {c:'오늘의 한마디', m:'나아지는 느낌이 전혀 들지 않아도 그냥 하라.'},
+  {c:'오늘의 한마디', m:'에너지를 빼앗는 모든 존재로부터 벗어나라.'},
+  {c:'오늘의 한마디', m:'망할듯 망할듯 망하지 않는 것이 바로 인생입니다'},
+  {c:'오늘의 한마디', m:'해'},
+  {c:'오늘의 한마디', m:'하지마'},
+  {c:'오늘의 한마디', m:'지고 싶지 않다면 이길 때까지 계속하면 된다.'},
+  {c:'오늘의 한마디', m:'자기자신과의 약속을 지켜나가다 보면 내가 지킨 약속들이 나를 지킨다.'},
+  {c:'오늘의 한마디', m:'헤맨 만큼 자기 땅이 된다.'},
+  {c:'오늘의 한마디', m:'너무 깊이 생각하지 마십시오.'},
+  {c:'오늘의 한마디', m:'지금부터가 반전'},
+  {c:'오늘의 한마디', m:'이것이 아티스트의 삶이다.'},
+  {c:'오늘의 한마디', m:'여름이었다...'},
+  {c:'오늘의 한마디', m:'예쁜 추억을 사진으로 남겨보세요!'},
+  {c:'오늘의 한마디', m:'오늘은 뭔가 되는 날!!!'},
+  {c:'오늘의 한마디', m:'생각보다 쉽게 풀린다.'},
+  {c:'오늘의 한마디', m:'예상 밖의 행운이 들어옵니다.'},
+  {c:'오늘의 한마디', m:'한 번쯤은 밀어붙여도 됩니다.'},
+  {c:'오늘의 한마디', m:'눈치보다가 기회 놓치지 말 것'},
+  {c:'오늘의 한마디', m:'고민은 길고 답은 의외로 짧다.'},
+  {c:'오늘의 한마디', m:'잃을 뻔한 치킨도 결국 네 것'},
+  {c:'오늘의 한마디', m:'결국 먹을 사람은 먹는다'},
+  {c:'오늘의 한마디', m:'지금의 직감이 꽤 정확해요!'},
+  {c:'오늘의 한마디', m:'마음 가는 쪽에 답이 있어요.'},
+  {c:'오늘의 한마디', m:'느리더라도 결국 닿게 된다.'},
+  {c:'오늘의 한마디', m:'오늘의 선택은 틀리지 않습니다.'},
+  {c:'오늘의 한마디', m:'별일 아닌 순간이 특별해진다.'},
+  {c:'오늘의 한마디', m:'너무 걱정하지 않아도 괜찮아요.'},
+  {c:'오늘의 한마디', m:'오늘은 침묵이 더 안전해요~'},
+  {c:'오늘의 한마디', m:'너무 쉽게 믿지 않는 편이 좋아요.'},
+  {c:'오늘의 한마디', m:'오늘은 한 번 더 확인하는 게 좋아요.'},
+  {c:'오늘의 한마디', m:'너무 늦기 전에 말하는 편이 좋아요.'},
+  {c:'오늘의 한마디', m:'작은 용기가 예상보다 큰 변화를 만들어요.'},
+  {c:'오늘의 한마디', m:'예상하지 못한 도움을 받아요.'},
+  {c:'오늘의 한마디', m:'웃고 넘긴 일이 가장 중요할 수 있어요.'},
+  {c:'오늘의 한마디', m:'삶이 있는 한 희망은 있다.'},
+  {c:'오늘의 한마디', m:'진정으로 웃으려면 고통을 참아야하며 , 나아가 고통을 즐길 줄 알아야 해.'},
+  {c:'오늘의 한마디', m:'신은 용기있는자를 결코 버리지 않는다.'},
+  {c:'오늘의 한마디', m:'행복의 문이 하나 닫히면 다른 문이 열린다 그러나 우리는 종종 닫힌 문을 멍하니 바라보다가 우리를 향해 열린 문을 보지 못하게 된다.'},
+  {c:'오늘의 한마디', m:'피할수 없으면 즐겨라.'},
+  {c:'오늘의 한마디', m:'단순하게 살아라.'},
+  {c:'오늘의 한마디', m:'절대 어제를 후회하지 마라.'},
+  {c:'오늘의 한마디', m:'너무 소심하고 까다롭게 자신의 행동을 고민하지 말라. 모든 인생은 실험이다.'},
+  {c:'오늘의 한마디', m:'한번의 실패와 영원한 실패를 혼동하지 마라.'},
+  {c:'오늘의 한마디', m:'오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.'},
+  {c:'오늘의 한마디', m:'행복은 습관이다,그것을 몸에 지니라.'},
+  {c:'오늘의 한마디', m:'자신감 있는 표정을 지으면 자신감이 생긴다.'},
+  {c:'오늘의 한마디', m:'평생 살 것처럼 꿈을 꾸어라.그리고 내일 죽을 것처럼 오늘을 살아라.'},
+  {c:'오늘의 한마디', m:'시간의 중요성을 이해하고 매순간을 즐겁게 보내고 유용하게 활용하라.'},
+  {c:'오늘의 한마디', m:'다른 이들과 함께 걸을 수는 있으나 다른 그 어느 누구도 그대가 선택한 길을 대신 가줄 수 없음을 알라.'},
+  {c:'오늘의 한마디', m:'고난이 지나면 반드시 기쁨이 스며든다.'},
+  {c:'오늘의 한마디', m:'해야 할 것을 하라.'},
+  {c:'오늘의 한마디', m:'고개 숙이지 마십시오. 세상을 똑바로 정면으로 바라보십시오.'},
+  {c:'오늘의 한마디', m:'도저히 손댈 수가 없는 곤란에 부딪혔다면 과감하게 그 속으로 뛰어들라.'},
+  {c:'오늘의 한마디', m:'문제는 목적지에 얼마나 빨리 가느내가 아니라 그 목적지가 어디냐는 것이다.'},
+  {c:'오늘의 한마디', m:'삶이 그대를 속일지라도 슬퍼하거나 노하지 말아라.'},
+  {c:'오늘의 한마디', m:'불행을 생각하지 않게 되는 가장 좋은 방법은 일에 몰두하는 것이다.'},
+  {c:'오늘의 한마디', m:'우리는 두려움의 홍수에 버티기 위해서 끊임없이 용기의 둑을 쌓아야 한다.'},
+  {c:'오늘의 한마디', m:'직접 눈으로 본 일도 오히려 참인지 아닌지 염려스러운데 더구나 등뒤에서 남이 말하는 것이야 어찌 이것을 깊이 믿을 수 있으랴?'},
+  {c:'오늘의 한마디', m:'길을 잃는다는 것은 곧 길을 찾는 방법이다.'},
+  {c:'힐링', m:'조급해하지 않아도 괜찮아요. 잘 하고 있어요.'},
+  {c:'힐링', m:'지친 날엔 잠깐 쉬어도 돼요.'},
+  {c:'따뜻한 운세', m:'누군가 오늘 당신을 조용히 응원하고 있어요.'},
+  {c:'오늘의 한마디', m:'작은 친절이 큰 하루를 만들어요. 웃음 가득한 하루 보내요!'},
+  {c:'힐링', m:'어제보다 조금 더 단단해진 자신을 믿어요.'},
+  {c:'급식 운세', m:'오늘 급식에 좋아하는 메뉴가 나올 확률 87% 🍚'},
+  {c:'학교 운세', m:'오늘 수업시간, 절묘하게 걸리지 않고 넘어갈 거예요.'},
+  {c:'급식 운세', m:'오늘은 유난히 일찍 밥먹는 날!'},
+  {c:'학교 운세', m:'와이파이가 유독 잘 터지는 하루가 될 거예요 📶'},
+  {c:'급식 운세', m:'후식이 기대되는 날. 디저트 운이 상승 중 🍮'},
+  {c:'밈 운세', m:'오늘의 행운 아이템: 충전 100% 상태.'},
+  {c:'공부운', m:'집중이 잘 되는 날이에요. 미뤘던 걸 시작하기 딱 좋아요.'},
+  {c:'총운', m:'예상 못 한 좋은 소식이 들려올 수 있는 하루.'},
+  {c:'인간관계운', m:'솔직한 한마디가 관계를 더 가깝게 만들어줄 거예요.'},
+  {c:'공부운', m:'오늘 외운 건 오래 기억에 남아요. 복습에 좋은 날!'},
+  {c:'재물운', m:'잃어버린 줄 알았던 걸 다시 찾게 될지도 몰라요.'},
+  {c:'총운', m:'무리하지 않으면 모든 게 순조로운 하루예요.'},
+  {c:'건강운', m:'물 한 잔, 스트레칭 한 번이 오늘 컨디션을 살려요.'},
+  {c:'힐링', m:'오늘의 당신은 어제의 걱정을 이겨낸 사람이에요.'},
+  {c:'힐링', m:'서두르지 않아도 도착할 곳엔 결국 도착해요.'},
+  {c:'힐링', m:'오늘은 스스로에게 조금 더 다정해도 되는 날.'},
+  {c:'따뜻한 운세', m:'내가 건넨 인사 하나가 누군가의 하루를 살려요.'},
+  {c:'오늘의 한마디', m:'완벽하지 않아도 충분히 멋진 하루예요.'},
+  {c:'힐링', m:'남들과 비교하지 않기로 해요!'},
+  {c:'힐링', m:'작은 성취도 성취예요. 오늘 하나만 해내도 성공.'},
+  {c:'따뜻한 운세', m:'오늘 뜻밖의 다정함을 만나게 될 거예요.'},
+  {c:'오늘의 한마디', m:'당신의 웃음이 오늘 누군가에게 큰 힘이 돼요 😊'},
+  {c:'힐링', m:'실수해도 괜찮아요. 그게 배우는 중이라는 증거예요.'},
+  {c:'힐링', m:'오늘 하루도 무사히 지나갈 거예요. 걱정 접어두기.'},
+  {c:'따뜻한 운세', m:'좋아하는 사람에게서 연락이 올 수도 있어요.'},
+  {c:'오늘의 한마디', m:'오늘의 행운은 여유에서 나와요.'},
+  {c:'힐링', m:'지금 힘든 건 약해서가 아니라 애쓰고 있어서예요.'},
+  {c:'힐링', m:'좋아하는 노래 한 곡이 행운을 불러와요 🎧'},
+  {c:'급식 운세', m:'오늘 급식을 유난히 많이 받을 거예요 🍜'},
+  {c:'급식 운세', m:'오늘의 국물 요리가 유난히 맛있는 날!'},
+  {c:'급식 운세', m:'디저트 운 최고조 🍓'},
+  {c:'급식 운세', m:'오늘 반찬 조합이 완벽하게 맞아떨어지는 날.'},
+  {c:'급식 운세', m:'급식실 자리 운이 좋아요. 좋은 자리를 차지할 거예요.'},
+  {c:'급식 운세', m:'오늘은 추가 배식 성공 확률이 높은 날! 🍚'},
+  {c:'급식 운세', m:'좋아하는 메뉴와 마주칠 운명. 기대해도 좋아요.'},
+  {c:'급식 운세', m:'오늘 급식은 별점 다섯 개짜리 예감 ⭐'},
+  {c:'급식 운세', m:'급식 후 나른함 주의!'},
+  {c:'학교 운세', m:'오늘 수업, 시간이 유난히 빨리 흐를 거예요.'},
+  {c:'학교 운세', m:'발표·지목을 절묘하게 피해가는 하루 🍀'},
+  {c:'학교 운세', m:'깜빡한 준비물이 오늘은 문제 되지 않을 거예요.'},
+  {c:'학교 운세', m:'쉬는 시간이 유독 꿀같이 느껴지는 날.'},
+  {c:'학교 운세', m:'오늘 필기가 술술 잘 되는 날 ✏️'},
+  {c:'학교 운세', m:'조별 활동에서 좋은 팀을 만날 운.'},
+  {c:'학교 운세', m:'예상보다 일찍 끝나는 수업이 있을지도 몰라요.'},
+  {c:'밈 운세', m:'오늘 찍은 셀카, 인생샷 각 📸'},
+  {c:'밈 운세', m:'와이파이가 유독 잘 터지는 하루 📶'},
+  {c:'밈 운세', m:'오늘 알고리즘이 띄워주는 영상이 취향 저격일 듯.'},
+  {c:'밈 운세', m:'잃어버린 이어폰 한 짝도 찾을 수 있는 행운이?!'},
+  {c:'밈 운세', m:'오늘의 행운 숫자: 지금 떠올린 그 숫자.'},
+  {c:'밈 운세', m:'기적의 타이밍의 하루 🚌'},
+  {c:'밈 운세', m:'오늘 던진 농담이 의외로 크게 먹힐 거예요.'},
+  {c:'공부운', m:'집중력이 살아나는 날. 미뤘던 걸 시작하기 좋아요.'},
+  {c:'공부운', m:'오늘 외운 건 오래 남아요. 복습 효율 최고!'},
+  {c:'공부운', m:'헷갈리던 개념이 오늘 갑자기 이해될 수 있어요 💡'},
+  {c:'공부운', m:'짧게 공부해도 밀도 높은 하루가 될 거예요.'},
+  {c:'공부운', m:'오늘 푼 문제에서 실전 문제가 나올 예감.'},
+  {c:'공부운', m:'계획한 만큼 딱 해내는 뿌듯한 하루가 될 거예요.'},
+  {c:'공부운', m:'잠깐의 휴식이 오히려 능률을 올려주는 날.'},
+  {c:'총운', m:'예상 못 한 좋은 소식이 들려올 수 있는 하루.'},
+  {c:'총운', m:'무리하지 않으면 모든 게 순조로운 하루예요.'},
+  {c:'총운', m:'오늘 내린 작은 결정이 좋은 결과로 이어져요.'},
+  {c:'총운', m:'미뤄둔 일을 해결하기 딱 좋은 타이밍이에요.'},
+  {c:'총운', m:'오늘은 기다리던 일이 한 걸음 나아가는 날.'},
+  {c:'총운', m:'작은 행운이 여러 번 찾아오는 하루가 될 거예요 🍀'},
+  {c:'총운', m:'오늘의 선택, 나중에 잘했다고 생각하게 될 거예요.'},
+  {c:'인간관계운', m:'솔직한 한마디가 관계를 더 가깝게 만들어줘요.'},
+  {c:'인간관계운', m:'오늘 누군가와 오해가 자연스레 풀릴 수 있어요.'},
+  {c:'인간관계운', m:'먼저 건넨 인사가 좋은 인연으로 돌아와요.'},
+  {c:'인간관계운', m:'오늘은 친구와의 대화가 유난히 즐거운 날.'},
+  {c:'인간관계운', m:'당신의 편이 되어주는 사람을 새삼 느끼게 될 거예요.'},
+  {c:'인간관계운', m:'작은 배려를 실천해보세요!'},
+  {c:'재물운', m:'잃어버린 줄 알았던 걸 다시 찾게 될지도 몰라요.'},
+  {c:'재물운', m:'예상 못 한 곳에서 소소한 이득이 생기는 날 💰'},
+  {c:'재물운', m:'오늘은 지갑을 잘 챙기면 행운이 따라와요.'},
+  {c:'재물운', m:'오늘은 지갑을 잘 열면 행운이 따라와요.'},
+  {c:'재물운', m:'용돈이 들어올 하루!'},
+  {c:'재물운', m:'뜻밖의 할인·이벤트를 만날 운이 있어요 🎁'},
+  {c:'건강운', m:'물 한 잔, 스트레칭 한 번이 오늘 컨디션을 살려요.'},
+  {c:'건강운', m:'충분히 자면 내일의 내가 고마워할 거예요 😴'},
+  {c:'건강운', m:'오늘은 가볍게 몸을 움직이면 기분까지 상쾌해져요.'},
+  {c:'건강운', m:'물 한 잔이 오늘의 작은 보약이 돼요.'},
+  {c:'건강운', m:'잠깐의 산책이 머리를 맑게 해주는 날.'},
+  {c:'건강운', m:'오늘은 눈과 어깨를 자주 쉬어주면 좋아요.'},
+];
+function _todayKey(){ return new Date().toISOString().slice(0,10); }
+function _pickFortune(){
+  const k = _todayKey();
+  let seed = 0; for (let i=0;i<k.length;i++) seed = (seed*31 + k.charCodeAt(i)) % 100000;
+  let salt = localStorage.getItem('fortune_salt');
+  if (!salt) { salt = String(Math.floor(Math.random()*9999)); try{localStorage.setItem('fortune_salt',salt);}catch(e){} }
+  for (let i=0;i<salt.length;i++) seed = (seed*17 + salt.charCodeAt(i)) % 100000;
+  return FORTUNES[seed % FORTUNES.length];
+}
+function openFortune(){
+  const already = localStorage.getItem('fortune_opened_date') === _todayKey();
+  const f = _pickFortune();
+  const mount = document.getElementById('modalMount');
+  mount.innerHTML = `
+    <div class="overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal" style="max-width:340px;text-align:center;max-height:88vh;overflow-y:auto;">
+        <h2>🥠 오늘의 운세</h2>
+        <div class="fortune-stage" id="fortuneStage">
+          ${already ? '' : '<div class="fortune-cookie" id="fortuneCookie" onclick="_crackCookie()">🥠</div>'}
+        </div>
+        <p class="fortune-hint" id="fortuneHint">${already ? '오늘은 이미 뽑았어요!' : '쿠키를 톡! 눌러보세요'}</p>
+        <p class="fortune-again">하루에 한 번, 자정이 지나면 새 운세가 나와요 ✨</p>
+        <div class="row-btns" style="margin-top:14px;">
+          <button class="btn-ghost" style="flex:1;" onclick="closeModal()">닫기</button>
+        </div>
+      </div>
+    </div>`;
+  if (already) { setTimeout(()=>_revealFortune(f, true), 60); }
+}
+function _crackCookie(){
+  if (localStorage.getItem('fortune_opened_date') === _todayKey()) return;
+  const cookie = document.getElementById('fortuneCookie');
+  if (!cookie || cookie.dataset.done) return;
+  cookie.dataset.done = '1';
+  cookie.classList.add('shake');
+  const f = _pickFortune();
+  try { localStorage.setItem('fortune_opened_date', _todayKey()); } catch(e){}
+  setTimeout(()=>_revealFortune(f, false), 420);
+}
+function _revealFortune(f, instant){
+  const stage = document.getElementById('fortuneStage');
+  const hint = document.getElementById('fortuneHint');
+  if (!stage) return;
+  if (instant) {
+    // 이미 오늘 뽑음 → 쿠키 없이 종이만 바로 표시
+    stage.innerHTML = `
+      <div class="fortune-paper show" id="fortunePaper">
+        <div class="fp-msg">${f.m}</div>
+      </div>`;
+  } else {
+    // 진짜 깨지는 연출: 반으로 갈라져 양옆으로 날아가 사라지고 종이만 남음
+    stage.innerHTML = `
+      <div class="cookie-half left crack-left">🥠</div>
+      <div class="cookie-half right crack-right">🥠</div>
+      <div class="fortune-paper" id="fortunePaper">
+        <div class="fp-msg">${f.m}</div>
+      </div>`;
+    requestAnimationFrame(()=>{ const p=document.getElementById('fortunePaper'); if(p) p.classList.add('show'); });
+  }
+  if (hint) hint.textContent = '오늘의 운세가 나왔어요! 🍀';
+}
+
+// ===== 인앱 브라우저 감지 + 앱 설치 유도 =====
+(function(){
+  const ua = navigator.userAgent || '';
+  const isAndroid = /android/i.test(ua);
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  // 메신저/SNS 인앱 브라우저 감지
+  const isInApp = /KAKAOTALK|FBAN|FBAV|Instagram|Line\/|NAVER|DaumApps|everytimeApp|band|wadiz/i.test(ua);
+  // 이미 홈화면 앱(standalone)으로 실행 중이면 아무것도 안 함
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  const url = location.href;
+
+  function show(html){
+    // 기존 모달 안 건드리고 별도 레이어 사용
+    let m = document.getElementById('promoMount');
+    if(!m){ m = document.createElement('div'); m.id='promoMount'; document.body.appendChild(m); }
+    m.innerHTML = html;
+  }
+  function close(){ const m=document.getElementById('promoMount'); if(m) m.innerHTML=''; }
+  window._promoClose = close;
+  // 오늘 날짜 키 (YYYY-MM-DD)
+  const today = new Date().toISOString().slice(0,10);
+  window._inappDismissToday = function(){ try{ localStorage.setItem('inapp_dismissed_date', today); }catch(e){} close(); };
+
+  // --- 1) 인앱 브라우저면: 외부 브라우저로 열기 유도 ---
+  if (isInApp && !isStandalone) {
+    // 오늘 이미 닫았으면 안 띄움 (다음 날 다시 한 번)
+    if (localStorage.getItem('inapp_dismissed_date') === today) return;
+    if (isAndroid) {
+      // 안드로이드: 크롬으로 강제 오픈 시도 (intent)
+      const clean = url.replace(/^https?:\/\//,'');
+      // 안내 먼저 띄우고, 버튼으로 크롬 열기 (자동 리다이렉트는 카톡이 막는 경우 있어 버튼식이 안전)
+      show(`
+        <div class="overlay" style="z-index:200;" onclick="if(event.target===this)_inappDismissToday()">
+          <div class="modal" style="max-width:380px;text-align:center;">
+            <h2>🌷 잠깐!</h2>
+            <p class="hint" style="margin-bottom:16px;">지금은 <b>카톡 같은 앱 안의 브라우저</b>라서<br>설정·별명·즐겨찾기가 저장되지 않아요 😢<br><br>아래 버튼으로 <b>크롬에서 열면</b> 모두 저장돼요!</p>
+            <div class="row-btns" style="flex-direction:column;">
+              <button class="btn-primary" onclick="location.href='intent://${clean}#Intent;scheme=https;package=com.android.chrome;end'">크롬으로 열기 🚀</button>
+              <button class="btn-ghost" style="margin-top:8px;" onclick="_inappDismissToday()">그냥 둘러볼게요</button>
+            </div>
+          </div>
+        </div>`);
+    } else {
+      // iOS 등: 자동 전환 불가 → 안내만
+      show(`
+        <div class="overlay" style="z-index:200;" onclick="if(event.target===this)_inappDismissToday()">
+          <div class="modal" style="max-width:380px;text-align:center;">
+            <h2>🌷 잠깐!</h2>
+            <p class="hint" style="margin-bottom:16px;">지금은 <b>카톡·인스타 안의 브라우저</b>라서<br>설정·별명·즐겨찾기가 저장되지 않아요 😢</p>
+            <p class="hint" style="background:var(--c-bg);border-radius:12px;padding:12px;margin-bottom:4px;">
+              오른쪽 위 <b>···</b> 또는 <b>공유 버튼</b>을 눌러<br><b>"Safari로 열기"</b>를 선택해 주세요!</p>
+            <div class="row-btns">
+              <button class="btn-ghost" style="flex:1;" onclick="_inappDismissToday()">알겠어요</button>
+            </div>
+          </div>
+        </div>`);
+    }
+    return; // 인앱이면 설치 유도는 생략
+  }
+
+  // --- 2) 일반 브라우저: 앱 설치(홈화면 추가) 유도 ---
+  if (isStandalone) return; // 이미 설치됨
+  if (localStorage.getItem('install_dismissed')) return; // 사용자가 이전에 닫았으면 안 띄움
+
+  let deferredPrompt = null;
+
+  // 안드로이드 크롬: beforeinstallprompt 잡아서 직접 설치 버튼 제공
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    show(`
+      <div class="overlay" style="z-index:200;" onclick="if(event.target===this)_promoClose()">
+        <div class="modal" style="max-width:380px;text-align:center;">
+          <h2>📲 앱으로 설치할까요?</h2>
+          <p class="hint" style="margin-bottom:16px;">홈 화면에 추가하면 앱처럼 빠르게 열리고,<br>설정·별명·즐겨찾기가 <b>계속 저장</b>돼요!</p>
+          <div class="row-btns" style="flex-direction:column;">
+            <button class="btn-primary" id="doInstallBtn">홈 화면에 추가 🏠</button>
+            <button class="btn-ghost" style="margin-top:8px;" onclick="localStorage.setItem('install_dismissed','1');_promoClose()">다음에요</button>
+          </div>
+        </div>`);
+    setTimeout(()=>{
+      const b = document.getElementById('doInstallBtn');
+      if(b) b.onclick = async () => {
+        close();
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      };
+    }, 40);
+  });
+
+  // iOS 사파리: beforeinstallprompt 없음 → 수동 안내 (사파리에서 열었을 때만)
+  if (isIOS) {
+    const isSafari = /safari/i.test(ua) && !/crios|fxios|edgios/i.test(ua);
+    if (isSafari) {
+      // 첫 방문 살짝 늦게 띄워 거슬리지 않게
+      setTimeout(()=>{
+        if (localStorage.getItem('install_dismissed')) return;
+        show(`
+          <div class="overlay" style="z-index:200;" onclick="if(event.target===this)_promoClose()">
+            <div class="modal" style="max-width:380px;text-align:center;">
+              <h2>📲 앱처럼 쓰기</h2>
+              <p class="hint" style="margin-bottom:8px;">홈 화면에 추가하면 설정·별명·즐겨찾기가<br><b>계속 저장</b>되고 빠르게 열려요!</p>
+              <p class="hint" style="background:var(--c-bg);border-radius:12px;padding:12px;">
+                아래 <b>공유 버튼 ⬆️</b> → <b>"홈 화면에 추가"</b>를 눌러주세요!</p>
+              <div class="row-btns">
+                <button class="btn-ghost" style="flex:1;" onclick="localStorage.setItem('install_dismissed','1');_promoClose()">알겠어요</button>
+              </div>
+            </div>`);
+      }, 3000);
+    }
+  }
+})();
+</script>
+</body>
+</html>
